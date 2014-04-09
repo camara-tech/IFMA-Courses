@@ -30,15 +30,8 @@ function filter_courses( $query) {
 
         $filter = array();
 
-
-        //handle start dates
-
-
         //handle start dates
         // will show dates that are later than current date, unless start date is changed.
-
-
-
         if (isset($_GET['start_date']) && strtotime($_GET['start_date']) === -1) {
             $date = date('Ymd',strtotime($_GET['start_date']));
             $filter[] = array(
@@ -85,12 +78,23 @@ function filter_courses( $query) {
                 'compare' => 'LIKE'
             );
         }
-    //echo '<pre> ';
-    //print_r($delivery_method);
-    //echo ' </pre>';
-
 
         //handle accreditation
+        if (isset($_GET['accredited']) && $_GET['accredited'] === "yes") {
+            $filter[] = array(
+                'key' => 'accredited',
+                'value'=> 1
+            );
+        }
+        if (isset($_GET['accredited']) && $_GET['accredited'] === "no") {
+            $filter[] = array(
+                'key' => 'accredited',
+                'value'=> 1,
+                'compare' => '!='
+            );
+        }
+
+
 
         //handle Credentials
 
@@ -99,17 +103,7 @@ function filter_courses( $query) {
     }
 
 
-
-    echo '<pre> ';
-    print_r($filter);
-    echo ' </pre>';
-
     $query->set('meta_query',$filter);
-
-
-    //echo '<pre> ';
-    //print_r($query);
-    //echo ' </pre>';
 
     return $query;
 }

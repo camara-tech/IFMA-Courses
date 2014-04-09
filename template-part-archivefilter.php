@@ -63,7 +63,6 @@
 
 
 <?php
- var_dump($the_query);
 //if (isset($_GET['start_date']))
 //        echo '"'.$_GET['start_date'].'"<br>';
 //        echo '"'.strval($_GET['start_date']).'"<br>';

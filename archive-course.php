@@ -54,6 +54,7 @@ function walk_delivery_method($value,$key) {
                                 echo '<pre>';
                                 print_r($fields);
                                 echo '</pre>';
+                                var_dump($fields);
                             ?>
 
                             <a href="<?php echo get_permalink(); ?>" class="btn btn-default pull-right"> Read More...</a>
