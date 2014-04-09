@@ -1,0 +1,48 @@
+/*
+ Theme Name:    jcamara-theme
+ Theme URI:     http://github.com/italy-portugal/jonathancamara-wptheme
+ Description:   child theme for devdmboostrap3
+ Author:        Jonathan Camara
+ Author URI:    http://www.jonathancamara.com
+ Template:      devdmbootstrap3
+ Version:       0.0.1
+ Github Theme URI: https://github.com/italy-portugal/jonathancamara-wptheme
+ Github Branch: master
+*/
+
+@import url("../devdmbootstrap3/style.css");
+
+.dmbs-header-img {
+ padding:10px;
+}
+
+.dmbs-header-text{
+    display:none;
+}
+
+.dmbs-top-menu {
+    background-color:#ddd;
+}
+
+/* Course title for the list of courses */
+.course-list {
+  border: #888 solid thin;
+  box-shadow:2px 3px 8px #888;
+  padding:10px 20px;
+  margin-bottom:20px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+
+.course-title{
+  margin:0;
+  padding:0;
+
+}
+
+.course-details p{
+  display:inline-block;
+  padding-right: 10px;
+
+}
