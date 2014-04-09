@@ -57,31 +57,37 @@ function filter_courses( $query) {
 
         //handle delivery method
         //will filter based upon whether delivery_method is "on" or not.
-        $delivery_method = array();
-
         if (isset($_GET['online'])) {
-            $delivery_method[] = 'Online';
+            $filter[] = array(
+                'key' => 'delivery_method',
+                'value' => '"Online"',
+                'compare' => 'LIKE'
+            );
         }
         if (isset($_GET['on-site'])){
-            $delivery_method[] = 'On-site';
+            $filter[] = array(
+                'key' => 'delivery_method',
+                'value' => '"On-site"',
+                'compare' => 'LIKE'
+            );
         }
         if (isset($_GET['scheduled'])){
-            $delivery_method[]='Scheduled';
+            $filter[] = array(
+                'key' => 'delivery_method',
+                'value' => '"Scheduled"',
+                'compare' => 'LIKE'
+            );
         }
         if (isset($_GET['on-demand'])){
-            $delivery_method[]='On-Demand';
+            $filter[] = array(
+                'key' => 'delivery_method',
+                'value' => '"On-Demand"',
+                'compare' => 'LIKE'
+            );
         }
     //echo '<pre> ';
     //print_r($delivery_method);
     //echo ' </pre>';
-        if (count($delivery_method) > 0) {
-            $filter[] = array(
-                'key' => 'delivery_method',
-                'value' => $delivery_method,
-                'compare' => 'NOT IN'
-            );
-        }
-
 
 
         //handle accreditation
