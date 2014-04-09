@@ -52,11 +52,6 @@
     </fieldset>
   </div>
 
-  <div>
-    <label for="zip-code">Zip Code</label>
-    <input type="number" name="zip-code" />
-  </div>
-
   <input type="Submit" value="Search">
 
 </form>

@@ -97,8 +97,15 @@ function filter_courses( $query) {
 
 
         //handle Credentials
-
-        //handle zip code
+        if (isset($_GET['credential']) && $_GET['credential'] === "FMP") {
+            $query->set('cat', '6');
+        }
+        if (isset($_GET['credential']) && $_GET['credential'] === "SFP") {
+            $query->set('cat', '7');
+        }
+        if (isset($_GET['credential']) && $_GET['credential'] === "CFM") {
+            $query->set('cat', '8');
+        }
 
     }
 
