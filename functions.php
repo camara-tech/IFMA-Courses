@@ -32,7 +32,7 @@ function filter_courses( $query) {
 
         //handle start dates
         // will show dates that are later than current date, unless start date is changed.
-        if (isset($_GET['start_date']) && strtotime($_GET['start_date']) === -1) {
+        if (isset($_GET['start_date']) && strtotime($_GET['start_date']) != -1) {
             $date = date('Ymd',strtotime($_GET['start_date']));
             $filter[] = array(
                 'key' => 'start_date',
@@ -80,30 +80,21 @@ function filter_courses( $query) {
         }
 
         //handle accreditation
-        if (isset($_GET['accredited']) && $_GET['accredited'] === "yes") {
+        if (isset($_GET['accredited'])) {
             $filter[] = array(
                 'key' => 'accredited',
                 'value'=> 1
             );
         }
-        if (isset($_GET['accredited']) && $_GET['accredited'] === "no") {
-            $filter[] = array(
-                'key' => 'accredited',
-                'value'=> 1,
-                'compare' => '!='
-            );
-        }
-
-
 
         //handle Credentials
-        if (isset($_GET['credential']) && $_GET['credential'] === "FMP") {
+        if (isset($_GET['ifma_credential']) && $_GET['ifma_credential'] === "fmp") {
             $query->set('cat', '6');
         }
-        if (isset($_GET['credential']) && $_GET['credential'] === "SFP") {
+        if (isset($_GET['ifma_credential']) && $_GET['ifma_credential'] === "sfp") {
             $query->set('cat', '7');
         }
-        if (isset($_GET['credential']) && $_GET['credential'] === "CFM") {
+        if (isset($_GET['ifma_credential']) && $_GET['ifma_credential'] === "cfm") {
             $query->set('cat', '8');
         }
 

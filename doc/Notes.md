@@ -13,11 +13,12 @@ The information
 
 This is going to be done on Wordpress.
 
-Installed three plugins:
+Installed four plugins:
 
 * [Custom Post UI](http://wordpress.org/plugins/custom-post-type-ui/)
 * [Advanced Custom Fields](http://wordpress.org/plugins/advanced-custom-fields/)
 * [User Role Editor](http://wordpress.org/plugins/user-role-editor/)
+* [JSON API](http://wordpress.org/plugins/json-api/)
 
 installed theme:
 
@@ -78,7 +79,7 @@ These different fields of information could be categorized as follows:(pulling f
     - End Date
     - Delivery method - online, on-site, scheduled, on demand,etc.
     - possibly an image?
-    - Website URL
+    - Website URL/Register link
     - College Accredited (yes or no)
     - Credential (is it FMP, SFP, CFM?)
     - Has CEU
@@ -155,3 +156,9 @@ I'm going to put in the different SFP courses, and see What happens when I have 
 
 #### From April 10, 2014
 Been too busy to update documentation of previous days, will do quick dump. Figured out how to retrieve all the information I need from the database and format it. emailed other members about the different fields, implemented the changes mentioned by Alettia for the information and update the documentation to reflect those changes. implemented a search form that filters for credential type, accreditation, start date, and delivery method. not 100% sure of what theme I'm supposed to be using, and the kind of content. Need to send out an update about the fields as they currently stand.
+
+#### From April 11, 2014
+Update the form to dynamically add and remove fields that can be sorted by if fields are added or removed from the backend.
+
+#### from April 15, 2014
+figured out how to pull the course information as JSON data, so that I can pull it into any major Javascript MVC framework. I'm leaning toward Knockout since I know that once best, (and I've already built a frontend similar to what we are looking at). but I might want to look at backbone, ember, or angular...depending on whether we have enough time. 
