@@ -1,5 +1,5 @@
-#jonathancamara.com Wordpress Theme
+#IFMA Courses Wordpress Theme
 
-my personally-developed theme for my website
+Theme currently being developed for the IFMA Courses Website
 
 It is a child theme of the devdmboostrap3 theme.
