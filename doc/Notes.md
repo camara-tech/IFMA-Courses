@@ -86,8 +86,8 @@ These different fields of information could be categorized as follows:(pulling f
     - Has CEU
         - number of CEU
     - Level
-    - Instructor(links to instructor content type)
-    - Location (links to Location content type)
+    - Instructor (links to instructor content type)
+    - Location (links to Location Content Type)
 - Location (offer the ability to lookup/autofill the information?)
     - Full Address
     	- Country
