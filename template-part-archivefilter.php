@@ -48,6 +48,7 @@
 
     <?php $categories = get_categories(array( 'orderby'=>'id')); ?>
 
+    
     <fieldset>
         <legend>
             <?php echo $field[label];?>

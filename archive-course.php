@@ -22,7 +22,7 @@ function walk_delivery_method($value,$key) {
     <?php get_sidebar( 'left' ); ?>
     <?php get_template_part('template-part','archivefilter'); ?>
     <div class="col-md-<?php devdmbootstrap3_main_content_width(); ?> dmbs-main">
-
+    
             <?php // theloop
                 if ( have_posts() ) : while ( have_posts() ) : the_post();?>
                 <div <?php post_class(); ?>>
