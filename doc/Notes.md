@@ -72,21 +72,24 @@ Based upon my notes and our emails, we also need to know the following informati
 These different fields of information could be categorized as follows:(pulling from the IFMA.org events calendar)
 
 - Course Information
-    - Course Name
-    - Course Description(the html should be generated client-side...this is 2014, even IE 7 can do this)
+    - Name
+    - Description
+    - Course Syllabus
     - Provided By
     - Start Date
     - End Date
-    - Delivery method - online, on-site, scheduled, on demand,etc.
-    - possibly an image?
-    - Website URL/Register link
+    - Delivery method(online, on-site, scheduled, on demand,etc.)
+    - Website URL
+    - Registration URL
     - College Accredited (yes or no)
-    - Credential (is it FMP, SFP, CFM?)
+    - Credential (FMP, SFP, CFM)
     - Has CEU
         - number of CEU
     - Level
+    - Instructor(links to instructor content type)
+    - Location (links to Location content type)
 - Location (offer the ability to lookup/autofill the information?)
-	- Full Address
+    - Full Address
     	- Country
         - State/Province (if applicable)
         - City
@@ -96,12 +99,16 @@ These different fields of information could be categorized as follows:(pulling f
     - Longitude
     - School/Building Name
 - Instructor (Are the instructors different from the contacts?)
-    - Contact/Instructor First name
-    - Contact/Instructor Last name
+    - First name
+    - Last name
     - Email
     - Phone number
-    - Certifications ?
-    - Degrees ?
+    - Certifications
+    - Degrees
+- Contact
+    - Name
+    - Phone number
+    - Email Address
 
 ---
 
@@ -162,3 +169,21 @@ Update the form to dynamically add and remove fields that can be sorted by if fi
 
 #### from April 15, 2014
 figured out how to pull the course information as JSON data, so that I can pull it into any major Javascript MVC framework. I'm leaning toward Knockout since I know that once best, (and I've already built a frontend similar to what we are looking at). but I might want to look at backbone, ember, or angular...depending on whether we have enough time. 
+
+### from April 28, 2014
+I figured out how to filter the JSON data so that only what we need is pulled. I'm going to use javascript to replace the PHP functionality if Javascript works, otherwise the site will fallback to the processing being done server side. I received an email from Ronna which detailed how Holmes currently displays courses on their website:
+
+__Arizona__
+Arizona State University
+Course(s) offered:
+   Operations and Maintenance
+   Project Management
+   Finance and Business
+   Leadership and Strategy
+Contact: [Kenneth Sullivan, PhD](mailto:Kenneth.Sullivan@asu.edu), +1-480-965-4213
+URL: http://engineering.asu.edu/sebe
+Please contact the institution directly for pricing and registration.
+
+Also mentioned was only showing upcoming and nearby courses. tbhis would involve both geolocation and date information.
+
+This is rapidly moving from being just a website to a full on webapp. 
