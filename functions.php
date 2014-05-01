@@ -124,6 +124,7 @@ function relevanssi_qvs($qv) {
 	array_push($qv, 'on-demand');
 	array_push($qv, 'accredited');
 	array_push($qv, 'provided_by');
+	return $qv;
 
 }	
 
