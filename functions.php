@@ -19,13 +19,10 @@ function include_indexjs() {
 }
 add_action('wp_enqueue_scripts','include_indexjs');
 
-#enables the use of shortcodes in the widgets
-add_filter('widget_text', 'do_shortcode');
-
 #Let's add some search functionality
-#add_action('pre_get_posts', 'filter_courses');
+add_action('pre_get_posts', 'filter_courses');
 
-add_filter('relevanssi_modify_wp_query', 'filter_courses');
+#add_filter('relevanssi_modify_wp_query', 'filter_courses');
 function filter_courses( $query) {
     //validate
     if (is_admin() || ! $query->is_main_query())
@@ -114,9 +111,4 @@ function filter_courses( $query) {
     return $query;
 }
 
-function my_the_post_action($post_object){
-    echo "<pre> ". var_dump($post_object) . " </pre>";
-}
-
-add_action('the_post', 'my_the_post_action');
 ?>

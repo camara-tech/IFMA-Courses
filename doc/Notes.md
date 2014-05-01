@@ -73,8 +73,7 @@ These different fields of information could be categorized as follows:(pulling f
 
 - Course Information
     - Name
-    - Description
-    - Course Syllabus
+    - Description/Course Syllabus
     - Provided By
     - Start Date
     - End Date
@@ -109,6 +108,39 @@ These different fields of information could be categorized as follows:(pulling f
     - Name
     - Phone number
     - Email Address
+
+The searchable fields are:
+- Name
+- Description/Course Syllabus
+- Provided By
+- Credential
+- Location
+
+The sorting fields are:
+- Date
+- Number of CEU
+- Location (Requires Geolocation or the Map View)
+- Alphabetical (Name)
+
+The filtereds are:
+- Provided By
+- Date (after a particular date)
+- Delivery Method
+- College Accredited
+- Credential
+- Has CEU
+- Level?
+- Instructor
+- Location
+
+The Search Results will contain the following information:
+- Name
+- Delivery Method
+- Start Date
+- Provided By
+- Summary/Description
+- College Accredited
+-
 
 ---
 
