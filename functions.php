@@ -133,31 +133,55 @@ add_filter('relevanssi_hits_filter', 'relevanssi_filter_courses');
 function relevanssi_filter_courses($hits) {
 	global $wp_query;
 
-	if (isset($wp_query->query_vars['start_date'])) {
-		echo 'got a start_date';
-	}
+	$results = array();
+	foreach ($hits as $hit) {
+		//start filtering by start date
+		if (isset($wp_query->query_vars['start_date'])) {
+			if (date(Ymd,strtotime($wp_query->query_vars['start_date'])) >= the_field('start_date',$hit)) {
+				$results[] = $hit;
+			}
+		}		
 
-	if (isset($wp_query->query_vars['ifma_credential'])) {
-		echo 'got a credential';
-	}
-	if (isset($wp_query->query_vars['online'])) {
-		echo 'got online';
-	}
-	if (isset($wp_query->query_vars['on-site'])) {
-		echo 'got on-site';
-	}
-	if (isset($wp_query->query_vars['scheduled'])) {
-		echo 'got scheduled';
-	}	
-	if (isset($wp_query->query_vars['on-demand'])) {
-		echo 'got on-demand';
-	}
-	if (isset($wp_query->query_vars['accredited'])) {
-		echo 'get accredited';
-	}
-	if (isset($wp_query->query_vars['provided_by'])) {
+		//check that the result matches the correct credential
+		if (isset($wp_query->query_vars['ifma_credential'])) {
+			if ($wp_query->query_vars['ifma_credential']==='fmp' && !in_category("fmp",$results[])) {
+				array_pop($results);
+				continue;
+			} 
+			elseif ($wp_query->query_vars['ifma_credential']==='sfp'&& !in_category('sfp',$results[])) {
+				array_pop($results);
+				continue;
+			}	
+			elseif ($wp_query->query_vars['ifma_credential']==='cfm' && !in_category('cfm',$results[])) {
+				array_pop($results);
+				continue;
+			}
 		}
+		// remove those without the specified delivery method		
+		if (isset($wp_query->query_vars['online']) && !in_array('online', get_field('delivery_method',$results[]))) {
+			array_pop($results);
+			continue;
+		} elseif (isset($wp_query->query_vars['on-site']) && !in_array('on-site',get_field('delivery_method',$results[]))) {
+			array_pop($results);
+			continue;
+		} elseif (isset($wp_query->query_vars['scheduled']) && !in_array('scheduled',get_field('delivery_method',$results[]))) {
+			array_pop($results);
+			continue;
+		} elseif (isset($wp_query->query_vars['on-demand']) && !in_array('on-demand',get_field('delivery_method',$results[]))) {
+			array_pop($results);
+			continue;
+		}
+		// check accreditation
+		if (isset($wp_query->query_vars['accredited']) && !get_field('accredited')) {
+			array_pop($results);
+			continue;
+		}
+		// provided by
+		if (isset($wp_query->query_vars['provided_by']) && $wp_query->query_vars['provided_by'] != the_field('provided_by',$results[])) {
+			array_pop($results);
+			continue;
+		}
+	}
 	return $hits;
-
 }
 ?>
