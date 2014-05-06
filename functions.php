@@ -144,30 +144,30 @@ function relevanssi_filter_courses($hits) {
 
 		//check that the result matches the correct credential
 		if (isset($wp_query->query_vars['ifma_credential'])) {
-			if ($wp_query->query_vars['ifma_credential']==='fmp' && !in_category("fmp",$results[])) {
+			if ($wp_query->query_vars['ifma_credential']==='fmp' && !in_category("fmp",$hit)) {
 				array_pop($results);
 				continue;
 			} 
-			elseif ($wp_query->query_vars['ifma_credential']==='sfp'&& !in_category('sfp',$results[])) {
+			elseif ($wp_query->query_vars['ifma_credential']==='sfp'&& !in_category('sfp',$hit)) {
 				array_pop($results);
 				continue;
 			}	
-			elseif ($wp_query->query_vars['ifma_credential']==='cfm' && !in_category('cfm',$results[])) {
+			elseif ($wp_query->query_vars['ifma_credential']==='cfm' && !in_category('cfm',$hit)) {
 				array_pop($results);
 				continue;
 			}
 		}
 		// remove those without the specified delivery method		
-		if (isset($wp_query->query_vars['online']) && !in_array('online', get_field('delivery_method',$results[]))) {
+		if (isset($wp_query->query_vars['online']) && !in_array('online', get_field('delivery_method',$hit))) {
 			array_pop($results);
 			continue;
-		} elseif (isset($wp_query->query_vars['on-site']) && !in_array('on-site',get_field('delivery_method',$results[]))) {
+		} elseif (isset($wp_query->query_vars['on-site']) && !in_array('on-site',get_field('delivery_method',$hit))) {
 			array_pop($results);
 			continue;
-		} elseif (isset($wp_query->query_vars['scheduled']) && !in_array('scheduled',get_field('delivery_method',$results[]))) {
+		} elseif (isset($wp_query->query_vars['scheduled']) && !in_array('scheduled',get_field('delivery_method',$hit))) {
 			array_pop($results);
 			continue;
-		} elseif (isset($wp_query->query_vars['on-demand']) && !in_array('on-demand',get_field('delivery_method',$results[]))) {
+		} elseif (isset($wp_query->query_vars['on-demand']) && !in_array('on-demand',get_field('delivery_method',$hit))) {
 			array_pop($results);
 			continue;
 		}
@@ -177,7 +177,7 @@ function relevanssi_filter_courses($hits) {
 			continue;
 		}
 		// provided by
-		if (isset($wp_query->query_vars['provided_by']) && $wp_query->query_vars['provided_by'] != the_field('provided_by',$results[])) {
+		if (isset($wp_query->query_vars['provided_by']) && $wp_query->query_vars['provided_by'] != the_field('provided_by',$hit)) {
 			array_pop($results);
 			continue;
 		}
