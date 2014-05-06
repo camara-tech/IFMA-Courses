@@ -4,8 +4,11 @@
 
 
 <!-- search -->
-<form action="/wordpress/" method="get" class="search-form">
-<input type="search" name="s" placeholder="Search Courses"/>
-<input type="submit" value="Search" />
+<form role="search" action="/wordpress/courses" method="get" class="searchform">
+    <div>
+        <label class="screen-reader-text" for="s">Search Courses:</label>
+        <input type="text" name="s" id="s" placeholder="Search Courses"/>
+        <input type="submit" id="searchsubmit" value="Search" />
+    </div>
 </form>	
 
