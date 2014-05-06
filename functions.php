@@ -135,9 +135,13 @@ function relevanssi_filter_courses($hits) {
 
 	$results = array();
 	foreach ($hits as $hit) {
-		//start filtering by start date
+		//start filtering by start date and if no date is specified use current date.
 		if (isset($wp_query->query_vars['start_date'])) {
 			if (date(Ymd,strtotime($wp_query->query_vars['start_date'])) >= the_field('start_date',$hit)) {
+				$results[] = $hit;
+			}
+		} else {
+			if (date(Ymd,strtoTime('now')) >= the_field('start_date',$hit)) {
 				$results[] = $hit;
 			}
 		}		
