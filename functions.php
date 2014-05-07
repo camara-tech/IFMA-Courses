@@ -20,20 +20,50 @@ function include_indexjs() {
 add_action('wp_enqueue_scripts','include_indexjs');
 
 #Let's add some search functionality
+#
+# first make sure that the query vars for the filters  are available to relevanssi
+add_filter('query_vars', 'relevanssi_qvs');
 
-#using pre_get_posts
-add_action('pre_get_posts', 'filter_courses');
+function relevanssi_qvs($qv) {
+	array_push($qv, 'start_date');
+	array_push($qv, 'ifma_credential');
+	array_push($qv, 'online');
+	array_push($qv, 'on-site');
+	array_push($qv, 'scheduled');
+	array_push($qv, 'on-demand');
+	array_push($qv, 'accredited');
+	array_push($qv, 'provided_by');
+	return $qv;
 
-function filter_courses( $query) {
-	//validate
-	if (is_admin() || ! $query->is_main_query())
-	{
-		return $query;
+}
+
+
+#second, make sure that relevanssi fires if a filter is present but the search term is empty
+#
+#currently only tests if ifma_credential or start_date is present
+
+add_filter('relevanssi_search_ok', 'search_trigger');
+
+function search_trigger($search_ok){
+	global $wp_query;
+	if (!empty($wp_query->query_vars['ifma_credential']) || !empty($wp_query->query_vars['start_date'])){
+		$search_ok = true;
 	}
+	return $search_ok;
+}
 
+#now handle the relevanssi search, filtering if necessary
+#
 
-	if ( !is_page()) {
+add_filter('relevanssi_hits_filter', 'filter_courses');
 
+function filter_courses($hits) {
+	global $wp_query;
+
+	if ($hits[0] == null) {
+		// no search hits, so must create new
+		$args = array();
+		//filter out those things in meta fields
 		$filter = array();
 
 		//handle start dates
@@ -95,107 +125,72 @@ function filter_courses( $query) {
 
 		//handle Credentials
 		if (isset($_GET['ifma_credential']) && $_GET['ifma_credential'] === "fmp") {
-			$query->set('cat', '6');
+			$args->set('cat', '6');
 		}
 		if (isset($_GET['ifma_credential']) && $_GET['ifma_credential'] === "sfp") {
-			$query->set('cat', '7');
+			$args->set('cat', '7');
 		}
 		if (isset($_GET['ifma_credential']) && $_GET['ifma_credential'] === "cfm") {
-			$query->set('cat', '8');
+			$args->set('cat', '8');
 		}
 
-	}
+		$args->set('meta_query',$filter);
 
+		$hits[0] = get_posts($args);
+	} else {
+		$results = array();
+		foreach ($hits as $hit) {
+			//start filtering by start date and if no date is specified use current date.
+			if (isset($wp_query->query_vars['start_date'])) {
+				if (date(Ymd,strtotime($wp_query->query_vars['start_date'])) >= the_field('start_date',$hit->ID)) {
+					$results[] = $hit;
+				}
+			} else {
+				if (date(Ymd,strtoTime('now')) >= the_field('start_date',$hit->ID)) {
+					$results[] = $hit;
+				}
+			}		
 
-	$query->set('meta_query',$filter);
-
-	return $query;
-}
-
-
-#search using relevanssi
-add_filter('query_vars', 'relevanssi_qvs');
-
-function relevanssi_qvs($qv) {
-	array_push($qv, 'start_date');
-	array_push($qv, 'ifma_credential');
-	array_push($qv, 'online');
-	array_push($qv, 'on-site');
-	array_push($qv, 'scheduled');
-	array_push($qv, 'on-demand');
-	array_push($qv, 'accredited');
-  array_push($qv, 'provided_by');
-	return $qv;
-
-}	
-
-add_filter('relevanssi_hits_filter', 'relevanssi_filter_courses');
-
-function relevanssi_filter_courses($hits) {
-	global $wp_query;
-  var_dump($hits);
-	$results = array();
-	foreach ($hits[0] as $hit) {
-		//start filtering by start date and if no date is specified use current date.
-		if (isset($wp_query->query_vars['start_date'])) {
-      if (date(Ymd,strtotime($wp_query->query_vars['start_date'])) >= the_field('start_date',$hit->ID)) {
-        echo "got a hit with start_date";
-				$results[] = $hit;
+			//check that the result matches the correct credential
+			if (isset($wp_query->query_vars['ifma_credential'])) {
+				if ($wp_query->query_vars['ifma_credential']==='fmp' && !in_category("fmp",$hit)) {
+					array_pop($results);
+					continue;
+				} 
+				elseif ($wp_query->query_vars['ifma_credential']==='sfp'&& !in_category('sfp',$hit)) {
+					array_pop($results);
+					continue;
+				}	
+				elseif ($wp_query->query_vars['ifma_credential']==='cfm' && !in_category('cfm',$hit)) {
+					array_pop($results);
+					continue;
+				}
 			}
-		} else {
-			if (date(Ymd,strtoTime('now')) >= the_field('start_date',$hit->ID)) {
-echo "got a hit without start_date";
-				$results[] = $hit;
-			}
-		}		
-
-		//check that the result matches the correct credential
-		if (isset($wp_query->query_vars['ifma_credential'])) {
-      if ($wp_query->query_vars['ifma_credential']==='fmp' && !in_category("fmp",$hit)) {
-        echo "not fmp";
+			// remove those without the specified delivery method		
+			if (isset($wp_query->query_vars['online']) && !in_array('online', get_field('delivery_method',$hit->ID))) {
 				array_pop($results);
 				continue;
-			} 
-      elseif ($wp_query->query_vars['ifma_credential']==='sfp'&& !in_category('sfp',$hit)) {
-        echo "not sfp";
+			} elseif (isset($wp_query->query_vars['on-site']) && !in_array('on-site',get_field('delivery_method',$hit->ID))) {
 				array_pop($results);
 				continue;
-			}	
-      elseif ($wp_query->query_vars['ifma_credential']==='cfm' && !in_category('cfm',$hit)) {
-        echo "not cfm";
+			} elseif (isset($wp_query->query_vars['scheduled']) && !in_array('scheduled',get_field('delivery_method',$hit->ID))) {
+				array_pop($results);
+				continue;
+			} elseif (isset($wp_query->query_vars['on-demand']) && !in_array('on-demand',get_field('delivery_method',$hit->ID))) {
 				array_pop($results);
 				continue;
 			}
-		}
-		// remove those without the specified delivery method		
-    if (isset($wp_query->query_vars['online']) && !in_array('online', get_field('delivery_method',$hit->ID))) {
-      echo "not online";
-			array_pop($results);
-			continue;
-    } elseif (isset($wp_query->query_vars['on-site']) && !in_array('on-site',get_field('delivery_method',$hit->ID))) {
-      echo "not on-site";
-			array_pop($results);
-			continue;
-    } elseif (isset($wp_query->query_vars['scheduled']) && !in_array('scheduled',get_field('delivery_method',$hit->ID))) {
-      echo "not scheduled";
-			array_pop($results);
-			continue;
-    } elseif (isset($wp_query->query_vars['on-demand']) && !in_array('on-demand',get_field('delivery_method',$hit->ID))) {
-      echo "not on-demand";
-			array_pop($results);
-			continue;
-		}
-		// check accreditation
-		if (isset($wp_query->query_vars['accredited']) && get_field('accredited',$hit->ID)) {
-      echo "nothing accredited";
-			array_pop($results);
-			continue;
-		}
-		// provided by
-    if (isset($wp_query->query_vars['provided_by']) && $wp_query->query_vars['provided_by'] != the_field('provided_by',$hit->ID)) {
-      echo "not provided_by them";
-			array_pop($results);
-			continue;
+			// check accreditation
+			if (isset($wp_query->query_vars['accredited']) && !get_field('accredited',$hit->ID)) {
+				echo "nothing accredited";
+				array_pop($results);
+				continue;
+			}
+			// provided by
+			if (isset($wp_query->query_vars['provided_by']) && $wp_query->query_vars['provided_by'] != the_field('provided_by',$hit->ID)) {
+				array_pop($results);
+				continue;
+			}
 		}
 	}
 	return $hits;
