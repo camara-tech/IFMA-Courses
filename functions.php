@@ -139,7 +139,7 @@ function filter_courses($hits) {
 		$hits[0] = get_posts($args);
 	} else {
 		$results = array();
-		foreach ($hits as $hit) {
+		foreach ($hits[0] as $hit) {
 			//start filtering by start date and if no date is specified use current date.
 			if (isset($wp_query->query_vars['start_date'])) {
 				if (date(Ymd,strtotime($wp_query->query_vars['start_date'])) >= the_field('start_date',$hit->ID)) {
