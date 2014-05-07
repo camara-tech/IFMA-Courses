@@ -112,6 +112,7 @@ function filter_courses( $query) {
 	return $query;
 }
 
+
 #search using relevanssi
 add_filter('query_vars', 'relevanssi_qvs');
 
@@ -188,4 +189,5 @@ function relevanssi_filter_courses($hits) {
 	}
 	return $hits;
 }
+
 ?>
