@@ -137,11 +137,11 @@ function relevanssi_filter_courses($hits) {
 	foreach ($hits as $hit) {
 		//start filtering by start date and if no date is specified use current date.
 		if (isset($wp_query->query_vars['start_date'])) {
-			if (date(Ymd,strtotime($wp_query->query_vars['start_date'])) >= the_field('start_date',$hit)) {
+			if (date(Ymd,strtotime($wp_query->query_vars['start_date'])) >= the_field('start_date',$hit->ID)) {
 				$results[] = $hit;
 			}
 		} else {
-			if (date(Ymd,strtoTime('now')) >= the_field('start_date',$hit)) {
+			if (date(Ymd,strtoTime('now')) >= the_field('start_date',$hit->ID)) {
 				$results[] = $hit;
 			}
 		}		
@@ -162,26 +162,26 @@ function relevanssi_filter_courses($hits) {
 			}
 		}
 		// remove those without the specified delivery method		
-		if (isset($wp_query->query_vars['online']) && !in_array('online', get_field('delivery_method',$hit))) {
+		if (isset($wp_query->query_vars['online']) && !in_array('online', get_field('delivery_method',$hit->ID))) {
 			array_pop($results);
 			continue;
-		} elseif (isset($wp_query->query_vars['on-site']) && !in_array('on-site',get_field('delivery_method',$hit))) {
+		} elseif (isset($wp_query->query_vars['on-site']) && !in_array('on-site',get_field('delivery_method',$hit->ID))) {
 			array_pop($results);
 			continue;
-		} elseif (isset($wp_query->query_vars['scheduled']) && !in_array('scheduled',get_field('delivery_method',$hit))) {
+		} elseif (isset($wp_query->query_vars['scheduled']) && !in_array('scheduled',get_field('delivery_method',$hit->ID))) {
 			array_pop($results);
 			continue;
-		} elseif (isset($wp_query->query_vars['on-demand']) && !in_array('on-demand',get_field('delivery_method',$hit))) {
+		} elseif (isset($wp_query->query_vars['on-demand']) && !in_array('on-demand',get_field('delivery_method',$hit->ID))) {
 			array_pop($results);
 			continue;
 		}
 		// check accreditation
-		if (isset($wp_query->query_vars['accredited']) && !get_field('accredited',$hit)) {
+		if (isset($wp_query->query_vars['accredited']) && !get_field('accredited',$hit->ID)) {
 			array_pop($results);
 			continue;
 		}
 		// provided by
-		if (isset($wp_query->query_vars['provided_by']) && $wp_query->query_vars['provided_by'] != the_field('provided_by',$hit)) {
+		if (isset($wp_query->query_vars['provided_by']) && $wp_query->query_vars['provided_by'] != the_field('provided_by',$hit->ID)) {
 			array_pop($results);
 			continue;
 		}
