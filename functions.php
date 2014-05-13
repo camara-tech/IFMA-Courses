@@ -125,13 +125,13 @@ function filter_courses($hits) {
 
 		//handle Credentials
 		if (isset($_GET['ifma_credential']) && $_GET['ifma_credential'] === "fmp") {
-			$args->set('cat', '6');
+			$args->set('category', '6');
 		}
 		if (isset($_GET['ifma_credential']) && $_GET['ifma_credential'] === "sfp") {
-			$args->set('cat', '7');
+			$args->set('category', '7');
 		}
 		if (isset($_GET['ifma_credential']) && $_GET['ifma_credential'] === "cfm") {
-			$args->set('cat', '8');
+			$args->set('category', '8');
 		}
 
 		$args->set('meta_query',$filter);
@@ -192,6 +192,7 @@ function filter_courses($hits) {
 				continue;
 			}
 		}
+        $hits[0] = $results;
 	}
 	return $hits;
 }
