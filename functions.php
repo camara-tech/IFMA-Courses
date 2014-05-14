@@ -136,6 +136,7 @@ function filter_courses($hits) {
 		}
 
     $args['meta_query'] = $filter;
+
 		$hits[0] = get_posts($args);
 	} else {
 		$results = array();
