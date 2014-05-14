@@ -59,10 +59,11 @@ add_filter('relevanssi_hits_filter', 'filter_courses');
 
 function filter_courses($hits) {
 	global $wp_query;
-
 	if ($hits[0] == null) {
 		// no search hits, so must create new
-		$args = array();
+    $args = array(
+      'post_type' => 'course'
+    );
 		//filter out those things in meta fields
 		$filter = array();
 
@@ -125,17 +126,16 @@ function filter_courses($hits) {
 
 		//handle Credentials
 		if (isset($_GET['ifma_credential']) && $_GET['ifma_credential'] === "fmp") {
-			$args->set('category', '6');
+			$args['category'] = '6';
 		}
 		if (isset($_GET['ifma_credential']) && $_GET['ifma_credential'] === "sfp") {
-			$args->set('category', '7');
+			$args['category'] = '7';
 		}
 		if (isset($_GET['ifma_credential']) && $_GET['ifma_credential'] === "cfm") {
-			$args->set('category', '8');
+			$args['category'] = '8';
 		}
 
-		$args->set('meta_query',$filter);
-
+    $args['meta_query'] = $filter;
 		$hits[0] = get_posts($args);
 	} else {
 		$results = array();
@@ -182,7 +182,6 @@ function filter_courses($hits) {
 			}
 			// check accreditation
 			if (isset($wp_query->query_vars['accredited']) && !get_field('accredited',$hit->ID)) {
-				echo "nothing accredited";
 				array_pop($results);
 				continue;
 			}
