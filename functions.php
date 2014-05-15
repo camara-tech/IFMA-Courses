@@ -6,18 +6,43 @@ function include_font_awesome() {
 }
 add_action('wp_enqueue_scripts','include_font_awesome');
 
-function include_knockoutjs() {
-	wp_register_script('knockoutjs','http://cdnjs.cloudflare.com/ajax/libs/knockout/3.1.0/knockout-min.js');
-	wp_enqueue_script('knockoutjs');
-}
-add_action('wp_enqueue_scripts','include_knockoutjs');
-
 function include_indexjs() {
 	wp_register_script('indexjs',get_stylesheet_directory_uri().'/js/index.js', array('jquery'), false, true);
 
 	wp_enqueue_script('indexjs');
 }
 add_action('wp_enqueue_scripts','include_indexjs');
+
+
+# let's modify the admin menu
+
+add_action('admin_menu','remove_default_post_type');
+
+function remove_default_post_type() {
+  if (current_user_can('manage_options') === false) {
+  remove_menu_page('edit.php');
+  remove_menu_page('edit.php?post_type=page');
+  remove_menu_page('edit-comments.php');
+  remove_menu_page('themes.php');
+  remove_menu_page('plugins.php');
+  remove_menu_page('tools.php');
+  remove_menu_page('options-general.php');
+  remove_menu_page('users.php');
+  }
+  
+}
+
+add_action('wp_before_admin_bar_render', 'modify_admin_bar');
+
+function modify_admin_bar(){
+  if (current_user_can('manage_options') === false) {
+  global $wp_admin_bar;
+    $wp_admin_bar->remove_menu('new-post');
+  $wp_admin_bar->remove_menu('new-page');
+  }
+
+}
+
 
 #Let's add some search functionality
 #
