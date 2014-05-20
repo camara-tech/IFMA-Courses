@@ -20,10 +20,6 @@
     display:none;
 }
 
-.dmbs-top-menu {
-    background-color:#ddd;
-}
-
 /* Course title for the list of courses */
 .course-list {
   border: #888 solid thin;
@@ -45,4 +41,50 @@
   display:inline-block;
   padding-right: 10px;
 
+}
+
+.screen-reader-text {
+    font-size: 1em;
+}
+.filters {
+  display:block;
+}
+
+.facets {
+    margin-top: -50px;
+}
+
+.facets fieldset {
+    display:inline-block;
+}
+
+.first-search {
+   display:none;
+}
+
+.filter{
+  border: solid;
+  margin:1%;
+  width:11em;
+  height:11em;
+}
+
+#s {
+  -webkit-border-radius: 0.5em;
+  -moz-border-radius: 0.5em;
+  border-radius: 0.5em;
+  border: 1px #ddd solid;
+  height:2.7em;
+  width:80%;
+  margin-bottom:5em;
+  padding-left:1em;
+  padding-right:1em;
+}
+
+#searchsubmit {
+   display:inline-block;
+}
+
+.search-form{
+   text-align: center;
 }
