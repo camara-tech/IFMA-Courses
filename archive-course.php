@@ -4,17 +4,6 @@
 
 <?php get_template_part('template-part', 'topnav'); ?>
 
-<?php
-// some helper functions
-function walk_delivery_method($value,$key) {
-                if ($key == 0) {
-                    echo $value;
-                } else {
-                    echo ", ".$value;
-                }
-}
-
-?>
 <!-- start content container -->
 <div class="row dmbs-content">
 
@@ -49,13 +38,6 @@ function walk_delivery_method($value,$key) {
                             <p><i class="fa fa-globe"></i> <a href="<?php get_field("website"); ?>">Website</a></p>
                             </div>
                             <?php the_excerpt(); ?>
-                            <?php
-                            $fields = get_fields();
-                                echo '<pre>';
-                                print_r($fields);
-                                echo '</pre>';
-                                var_dump($fields);
-                            ?>
 
                             <a href="<?php echo get_permalink(); ?>" class="btn btn-default pull-right"> Read More...</a>
                             </article>

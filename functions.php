@@ -44,6 +44,15 @@ function modify_admin_bar(){
 }
 
 
+# a helper function
+
+function walk_delivery_method($value,$key) {
+                if ($key == 0) {
+                    echo $value;
+                } else {
+                    echo ", ".$value;
+                }
+}
 #Let's add some search functionality
 #
 # first make sure that the query vars for the filters  are available to relevanssi
