@@ -1,22 +1,15 @@
 <?php get_header(); ?>
+<div id="content">
+    <div class="row">
+      <?php get_template_part('template-part', 'search'); ?>
+<div class="col-lg-8 main-content">
+    <?php // theloop
+                if ( have_posts() ) : while ( have_posts() ) : the_post();
+                    ?>
+                       <div <?php post_class(); ?>>
 
-<?php get_template_part('template-part', 'head'); ?>
-
-<?php get_template_part('template-part', 'topnav'); ?>
-
-<!-- start content container -->
-<div class="row dmbs-content">
-
-    <?php //left sidebar ?>
-    <?php get_sidebar( 'left' ); ?>
-    <?php get_template_part('template-part','archivefilter'); ?>
-    <div class="col-md-<?php devdmbootstrap3_main_content_width(); ?> dmbs-main">
-    
-            <?php // theloop
-                if ( have_posts() ) : while ( have_posts() ) : the_post();?>
-                <div <?php post_class(); ?>>
                             <article class="container course-list">
-                            <h2 class="page-header course-title">
+                            <h2 class="course-title">
                                 <a href="<?php the_permalink(); ?>" title="<?php echo esc_attr( sprintf( __( 'Permalink to %s', 'devdmbootstrap3' ), the_title_attribute( 'echo=0' ) ) ); ?>" rel="bookmark"><?php the_title(); ?></a>
                             </h2>
                             <div class="course-details">
@@ -26,7 +19,13 @@
 
                                 ?>
 
-                            <p><i class="fa fa-road"></i> <?php array_walk(get_field('delivery_method'),'walk_delivery_method'); ?></p>
+                            <p><i class="fa fa-road"></i> <?php if (is_array(get_field('delivery_method'))) {
+                              array_walk(get_field('delivery_method'),'walk_delivery_method');
+                               } else {
+                                   echo get_field('delivery_method');
+                               }
+                               ?></p>
+
 
                             <?php if (get_field("accredited")=="Yes") { ?>
                             <p><i class="fa fa-check"></i> Accredited</p>
@@ -40,7 +39,7 @@
                             <?php the_excerpt(); ?>
 
                             <a href="<?php echo get_permalink(); ?>" class="btn btn-default pull-right"> Read More...</a>
-                            </article>
+                            </article
                             <?php wp_link_pages(); ?>
                             <?php get_template_part('template-part', 'postmeta'); ?>
                             <?php  if ( comments_open() ) : ?>
@@ -50,21 +49,16 @@
                                   </p>
                             <?php endif; ?>
                        </div>
-                       <?php endwhile; ?>
+
+                <?php endwhile; ?>
                 <?php posts_nav_link(); ?>
                 <?php else: ?>
 
                     <?php get_404_template(); ?>
 
             <?php endif; ?>
-
-   </div>
-
-   <?php //get the right sidebar ?>
-   <?php get_sidebar( 'right' ); ?>
-
 </div>
-<!-- end content container -->
+
+    </div>
 
 <?php get_footer(); ?>
-
