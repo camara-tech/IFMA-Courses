@@ -1,5 +1,5 @@
 <!-- search -->
-<form role="search" action="/wordpress/" method="get" class="searchform">
+<form role="search" action="/" method="get" class="searchform">
 <div class="search-form">
     <label class="screen-reader-text" for="s"><h2>Search Courses</h2></label><br />
     <input type="text" name="s" id="s" placeholder="What would you like to learn today?"/>
