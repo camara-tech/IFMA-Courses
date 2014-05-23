@@ -1,26 +1,35 @@
 <?php get_header(); ?>
 
 <!-- start content container -->
-<div class="row dmbs-content">
+<div id="content">
+    <div class="row">
+    <?php //get_template_part('template-part', 'search'); ?>
 
-    <?php get_template_part('template-part', 'search'); ?>
-    <div class="col-md-<?php devdmbootstrap3_main_content_width(); ?> dmbs-main">
+        <div class="col-lg-4 responsive-sidebar pull-right rst-off" id="rst">
+            <div class="responsive-sidebar-toggle"><div class="toggle-spacer"></div><span class="arrow closed"></span></div>
+            <div class="responsive-sidebar-content">
+            <?php get_sidebar('news'); ?>
+            </div>
+        </div>
 
-            <?php // theloop
+        <div class="col-lg-8 main-content">
+
+        <?php // theloop
                 if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
                         <div <?php post_class(); ?>>
 
-                            <h2 class="course-title page-header"><?php the_title() ;?></h2>
+                            <h2 class="page-header course-title"><?php the_title() ;?></h2>
 
-                            <?php if ( has_post_thumbnail() ) : ?>
-                                <?php the_post_thumbnail(); ?>
-                                <div class="clear"></div>
-                            <?php endif; ?>
                             <div class="course-details">
                             <p><i class="fa fa-calendar"></i> <?php echo date('M d, Y',strtotime(get_field('start_date'))); ?></p>
 
 
-                            <p><i class="fa fa-road"></i> <?php array_walk(get_field('delivery_method'),'walk_delivery_method'); ?></p>
+                            <p><i class="fa fa-road"></i> <?php if (is_array(get_field('delivery_method'))) {
+                              array_walk(get_field('delivery_method'),'walk_delivery_method');
+                               } else {
+                                   echo get_field('delivery_method');
+                               }
+                               ?></p>
 
                             <?php if (get_field("accredited")=="Yes") { ?>
                             <p><i class="fa fa-check"></i> Accredited</p>
@@ -34,23 +43,7 @@
 
                             <div class="course-info">
 
-                                           <div class="course-credential img-responsive pull-right">
-                                    <?php
 
-                                    if (in_category('fmp')){
-                                    echo '<img src="http://cdn.ifma.org/sfcdn/education/fmp-logo_color_med836DBD92634D.jpg?sfvrsn=2" alt="FMP Logo">';
-                                    }
-
-                                    if (in_category('sfp')){
-                                    echo '<img src="http://cdn.ifma.org/sfcdn/education/sfp-logo_color_medF85909A67844.jpg?sfvrsn=2" alt="SFP Logo">';
-                                    }
-
-                                    if (in_category('cfm')){
-                                    echo '<img src="http://cdn.ifma.org/sfcdn/education/cfm-logo_color_med182CC468D797.jpg?sfvrsn=2" alt="CFM Logo">';
-                                    }
-
-                                    ?>
-                                </div>
                                 <p>Provided By: <?php echo get_field("provided_by"); ?></p>
                                 <?php $instructor = get_field('instructor');
                                     if ($instructor) {
@@ -66,23 +59,12 @@
                             <div class="course-content">
 
                             <h3>Course Description/Syllabus</h3>
-                            <div class="course-location">
 
-                            <?php
-                            // map stuff
-                            $location = get_field('map_location');
-                            if ($location) {
-                                $place = get_field('map_location',$location[0]);
-                                echo "<p>Address: {$place['address']}</p>";
-                                echo "<img src='http://maps.googleapis.com/maps/api/staticmap?markers=".$place['lat'].",".$place['lng']."&zoom=13&size=400x400&sensor=false' alt='map location'>";
-                            }
-                           ?>
-                                </div>
                             <?php the_content(); ?></div>
 
                             <?php wp_link_pages(); ?>
                             <?php get_template_part('template-part', 'postmeta'); ?>
-                            <?php comments_template(); ?>
+
 
                         </div>
                        <?php endwhile; ?>
@@ -93,13 +75,8 @@
 
             <?php endif; ?>
 
-   </div>
-
-   <?php //get the right sidebar ?>
-   <?php get_sidebar( 'right' ); ?>
-
+        </div>
+    </div>
 </div>
-<!-- end content container -->
 
 <?php get_footer(); ?>
-

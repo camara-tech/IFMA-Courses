@@ -121,6 +121,11 @@
     float:right;
 }
 
+.course-credential {
+    margin-top:1em;
+}
 .course-credential img{
-    height:100px;
+    display:block;
+    margin-right:auto;
+    margin-left:auto;
 }

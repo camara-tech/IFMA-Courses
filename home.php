@@ -1,12 +1,6 @@
 <?php get_header(); ?>
 <div id="content">
     <div class="row">
-        <div class="col-lg-4 responsive-sidebar pull-right rst-off" id="rst">
-  	<div class="responsive-sidebar-toggle"><div class="toggle-spacer"></div><span class="arrow closed"></span></div>
-    <div class="responsive-sidebar-content">
-    	<?php get_sidebar('news'); ?>
-    </div>
-  </div>
       <?php get_template_part('template-part', 'search'); ?>
 <div class="col-lg-8 main-content">
     <?php // theloop

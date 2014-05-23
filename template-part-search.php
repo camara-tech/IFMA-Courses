@@ -69,6 +69,8 @@ endforeach;
 </div>
 
     <?php
+
+    if (!is_single()) {
     //make sure to cleanup the URL, so that we don't unecessarily increase the size of the query string
     parse_str($_SERVER['QUERY_STRING'],$query_string);
     if (isset($_GET['orderby'])) {
@@ -84,6 +86,6 @@ endforeach;
 <div class="filters">
     <p>Sort By: <a href="?<?php echo http_build_query($query_string)?>&meta_key=start_date&orderby=meta_value_num">Date</a> | <a href="?<?php echo http_build_query($query_string)?>&meta_key=map_location&orderby=meta_value">Location</a> | <a href="?<?php echo http_build_query($query_string) ?>&orderby=title">A-Z</a></p>
 </div>
-
+<?php } ?>
 </form>	
 
