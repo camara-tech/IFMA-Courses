@@ -1,8 +1,6 @@
 <?php //according to the wordpress codex, this is the default front-page for the website.
 get_header();
-get_template_part( 'template-part', 'head'); ?>
 
-<?php get_sidebar( 'left');?>
 <form role="search" action="/wordpress/" method="get" class="search-form">
     <label class="screen-reader-text" for="s"><h2>Search Courses</h2></label>
     <br />

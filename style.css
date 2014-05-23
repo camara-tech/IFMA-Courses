@@ -4,21 +4,24 @@
  Description:   child theme for devdmboostrap3
  Author:        Jonathan Camara
  Author URI:    http://www.jonathancamara.com
- Template:      devdmbootstrap3
+ Template:      IFMA
  Version:       0.0.1
+ Tags: IFMA, white, bootstrap, responsive
  Github Theme URI: https://github.com/italy-portugal/jonathancamara-wptheme
  Github Branch: master
 */
 
-@import url("../devdmbootstrap3/style.css");
+@import url("../IFMA/style.css");
 
-.dmbs-header-img {
- padding:10px;
+
+/* front page styling */
+
+.initial-facets {
+    margin-bottom:2em;
 }
 
-.dmbs-header-text{
-    display:none;
-}
+/*template-part-search styling */
+
 
 /* Course title for the list of courses */
 .course-list {
@@ -55,7 +58,7 @@
 }
 
 .facets {
-    margin-top: -50px;
+    margin-top: -20px;
     padding: 0 10%;
     width:100%;
     background-color:#ddd;
@@ -89,7 +92,7 @@
   border: 1px #ddd solid;
   height:2.7em;
   width:80%;
-  margin-bottom:5em;
+  margin-bottom:3em;
   padding-left:1em;
   padding-right:1em;
 }
@@ -100,4 +103,24 @@
 
 .search-form{
    text-align: center;
+
+}
+
+.search-form label {
+    width:100%;
+}
+/* rules for the single-course page */
+.course-info {
+    width:100%;
+    padding:1em;
+    border-radius:0.5em;
+    border: 1px #ddd solid;
+}
+
+.course-location{
+    float:right;
+}
+
+.course-credential img{
+    height:100px;
 }
