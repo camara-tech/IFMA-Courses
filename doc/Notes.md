@@ -13,16 +13,21 @@ The information
 
 This is going to be done on Wordpress.
 
-Installed four plugins:
+Installed nine plugins:
 
 * [Custom Post UI](http://wordpress.org/plugins/custom-post-type-ui/)
 * [Advanced Custom Fields](http://wordpress.org/plugins/advanced-custom-fields/)
 * [User Role Editor](http://wordpress.org/plugins/user-role-editor/)
 * [JSON API](http://wordpress.org/plugins/json-api/)
+* [GitHub Updater](http://github/afragen/github-updater)
+* [PHP Code Widget](http://wordpress.org/plugins/php-code-widget/)
+* [Relevanssi](http://wordpress.org/plugins/relevanssi/)
+* [Slideshow](http://wordpress.org/plugins/slideshow-jquery-image-gallery/)
+* [WordPress Importer](http://wordpress.org/plugins/wordpress-importer)
 
 installed theme:
 
-* [DevDMBoostrap3](http://wordpress.org/themes/devdmbootstrap3)
+* [IFMA](http://www.ifma.org)
 
 IFMA Courses Providers
 
@@ -202,7 +207,7 @@ Update the form to dynamically add and remove fields that can be sorted by if fi
 #### from April 15, 2014
 figured out how to pull the course information as JSON data, so that I can pull it into any major Javascript MVC framework. I'm leaning toward Knockout since I know that once best, (and I've already built a frontend similar to what we are looking at). but I might want to look at backbone, ember, or angular...depending on whether we have enough time. 
 
-### from April 28, 2014
+#### from April 28, 2014
 I figured out how to filter the JSON data so that only what we need is pulled. I'm going to use javascript to replace the PHP functionality if Javascript works, otherwise the site will fallback to the processing being done server side. I received an email from Ronna which detailed how Holmes currently displays courses on their website:
 
 __Arizona__
@@ -219,3 +224,20 @@ Please contact the institution directly for pricing and registration.
 Also mentioned was only showing upcoming and nearby courses. tbhis would involve both geolocation and date information.
 
 This is rapidly moving from being just a website to a full on webapp. 
+
+#### from May 23
+...one month later...
+
+In the past month, I've finished putting together the faceted search and integrated the system with Aron's IFMA theme. Of course, this is just a basic setup, but I have been given the deadline of July first to finish this project. I've realized a few things that would be much better if I had separated them out into plugins rather than having them as part of the theme. I'm currently looking at the following work:
+
+1. rework the design so that the search and the facets/filters make more sense visually.
+2. writing import scripts and documentation for how the system works.
+3. update the underlying data model if the system falls over or doesn't meet the requirements.
+2. integrate search into Advanced Custom fields, so that you can set which fields are used in a faceted search
+3. integrate search into the JSON API, so that you can have returned only the JSON which matches your results.
+
+For phase 2: I'm currently speculating on the following:
+
+1. reworking the backend entry form, so that you don't have to enter a location and an instructor previous to entering a course, but have it all integrated together.
+2. adding a calendar view and map view
+3. reworking the frontend and backend to be more separated, and thus take better advantage of modern web technologies
