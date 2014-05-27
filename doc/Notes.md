@@ -241,3 +241,7 @@ For phase 2: I'm currently speculating on the following:
 1. reworking the backend entry form, so that you don't have to enter a location and an instructor previous to entering a course, but have it all integrated together.
 2. adding a calendar view and map view
 3. reworking the frontend and backend to be more separated, and thus take better advantage of modern web technologies
+
+#### from May 27, 2013:
+I figured out a better way to handle returning the results from the post query: pull in all the courses, and then sort them. this would allow us to use the same code for filtering rather than using two completely different ways of returning results.
+
