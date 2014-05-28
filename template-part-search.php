@@ -34,16 +34,22 @@ foreach($acf_group_meta as $meta_field) {
                 }
             }
 // now we have the ACF fields directly from ACF itself.
-foreach ($fields as $field):
-  //handle date pickers
+
+// make sure that we have this laid out the way we want. rather than relying upon the order of the data for the layout.
+
+// handle date pickers
+foreach ($fields as $field){
   if ($field['type'] === 'date_picker' && $field['name'] === 'start_date') {
       echo "<div class='facet-date'>";
       echo "<label for ='{$field['name']}'>{$field['label']}</label><br />";
       echo "<input type='date' name='{$field['name']}' value=", date("Y-m-d",strtotime("now")). " placeholder='{$field['display_format']}'\/>";
       echo "</div>";
+  }
+}
 
   // handle everything that is a checkbox
-  } elseif ($field['type'] === 'checkbox') {
+foreach ($fields as $field){
+  if ($field['type'] === 'checkbox') {
       echo "<div class='facet-checkbox'>";
       echo "<label for ='{$field['name']}'>{$field['label']}</label><br />";
       echo "<select name={$field['name']} id={$field['name']} multiple='true'>";
@@ -56,9 +62,12 @@ foreach ($fields as $field):
       }
       echo '</select>';
       echo "</div>";
+  }
+}
 
   // handle all the true/false fields
-  } elseif ($field['type']==='true_false') {
+foreach ($fields as $field){
+  if ($field['type']==='true_false') {
       echo "<div class=facet-true_false>";
       echo "<label for ='{$field['name']}'>{$field['label']}</label><br />";
       if (isset($_GET[$field['name']]) && $_GET[$field['name']]==='on'){
@@ -68,10 +77,13 @@ foreach ($fields as $field):
       }
 
       echo "</div>";
+  }
+}
 
 
   //handle the category fields
-  } elseif ($field['type']==='taxonomy' && $field['taxonomy']==='category'){
+foreach ($fields as $field){
+  if ($field['type']==='taxonomy' && $field['taxonomy']==='category'){
       $categories = get_categories(array('orderby'=>'id'));
       echo "<div class='facet-category'>";
       echo "<label for={$field['name']}>{$field['label']}</label><br />";
@@ -88,7 +100,7 @@ foreach ($fields as $field):
     echo "</div>";
 
   }
-endforeach;
+}
 ?>
 </div>
 
