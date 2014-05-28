@@ -124,13 +124,5 @@ foreach ($fields as $field){
 </div>
 <?php } ?>
 
-
-    <div class="debug">
-        <pre>
-            <?php
-
-            ?>
-        </pre>
-    </div>
 </form>	
 
