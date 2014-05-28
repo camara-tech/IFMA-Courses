@@ -1,5 +1,6 @@
 <!-- search -->
 <form role="search" action="/" method="get" class="searchform">
+
 <div class="search-form">
     <label class="screen-reader-text" for="s"><h2>Search Courses</h2></label><br />
     <input type="text" name="s" id="s" placeholder="What would you like to learn today?"/>
@@ -8,8 +9,31 @@
 
 <div class="facets">
 <?php
-$fields = get_field_objects(13);
 
+//this theme requires Advanced custom fields...until I can get a plugin working.
+
+//first we need to pull all ACF groups
+$acf = get_posts(array('post_type' => 'acf'));
+// then we need to grab acf_courses
+foreach ($acf as $group) {
+    if ($group->post_name == 'acf_courses') {
+    $acf_group_ID = $group->ID;
+    }
+}
+
+// all the information is stored in the meta fields
+$acf_group_meta = get_post_meta($acf_group_ID);
+
+$fields = array();
+// make sure we don't have any extraneous information
+foreach($acf_group_meta as $meta_field) {
+                //the keys we are looking for all start with field_
+                if (substr_compare(key($meta_field),'field_',0,6)){
+                $fields[] = unserialize($meta_field[0]);
+
+                }
+            }
+// now we have the ACF fields directly from ACF itself.
 foreach ($fields as $field):
   //handle date pickers
   if ($field['type'] === 'date_picker' && $field['name'] === 'start_date') {
@@ -87,5 +111,14 @@ endforeach;
     <p>Sort By: <a href="?<?php echo http_build_query($query_string)?>&meta_key=start_date&orderby=meta_value_num">Date</a> | <a href="?<?php echo http_build_query($query_string)?>&meta_key=map_location&orderby=meta_value">Location</a> | <a href="?<?php echo http_build_query($query_string) ?>&orderby=title">A-Z</a></p>
 </div>
 <?php } ?>
+
+
+    <div class="debug">
+        <pre>
+            <?php
+
+            ?>
+        </pre>
+    </div>
 </form>	
 
