@@ -7,7 +7,7 @@ function include_font_awesome() {
 add_action('wp_enqueue_scripts','include_font_awesome');
 
 function include_indexjs() {
-	wp_register_script('indexjs',get_stylesheet_directory_uri().'/js/index.js', array('jquery'), false, true);
+	wp_register_script('indexjs',get_stylesheet_directory_uri().'/js/index.min.js', array('jquery'), false, true);
 
 	wp_enqueue_script('indexjs');
 }
