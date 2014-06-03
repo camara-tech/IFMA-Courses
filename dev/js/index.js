@@ -17,7 +17,8 @@ function process($courses) {
    for (var i = 0; i < $courses.length; i++) {
        $course_info[i].name = $courses[i].gsx$courses;
        $course_info[i].description = $courses[i].gsx$contactfname;
-       $course_info[i].providedby
+
+/*       $course_info[i].providedby = $courses[i]
        $course_info[i].startdate
        $course_info[i].enddate
        $course_info[i].deliverymethod
@@ -54,7 +55,7 @@ function process($courses) {
        $instructor_info[i].firstname
        $instructor_info[i].firstname
        
-       
+ */      
    }
     
 }
