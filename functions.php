@@ -93,102 +93,34 @@ add_filter('relevanssi_hits_filter', 'filter_courses');
 
 function filter_courses($hits) {
 	global $wp_query;
+
+	// just make sure that we have some results to work with:
 	if ($hits[0] == null) {
-		// no search hits, so must create new
-    $args = array(
-      'post_type' => 'course'
-    );
-		//filter out those things in meta fields
-		$filter = array();
+    // no search hits, so return all
+    $args = array( 'post_type' => 'course' );
+    $hits[0] = get_posts($args);
+    }
 
-		//handle start dates
-		// will show dates that are later than current date, unless start date is changed.
-		if (isset($_GET['start_date']) && strtotime($_GET['start_date']) != -1) {
-			$date = date('Ymd',strtotime($_GET['start_date']));
-			$filter[] = array(
-				'key' => 'start_date',
-				'value' => $date,
-				'compare' => '>='
-			);
-		} else {
-			$date = date('Ymd',strtotime('now'));
-			$filter[] = array(
-				'key' => 'start_date',
-				'value' => $date,
-				'compare' => '>='
-			);
-		}
-
-		//handle delivery method
-		//will filter based upon whether delivery_method is "on" or not.
-		if (isset($_GET['online'])) {
-			$filter[] = array(
-				'key' => 'delivery_method',
-				'value' => '"Online"',
-				'compare' => 'LIKE'
-			);
-		}
-		if (isset($_GET['on-site'])){
-			$filter[] = array(
-				'key' => 'delivery_method',
-				'value' => '"On-site"',
-				'compare' => 'LIKE'
-			);
-		}
-		if (isset($_GET['scheduled'])){
-			$filter[] = array(
-				'key' => 'delivery_method',
-				'value' => '"Scheduled"',
-				'compare' => 'LIKE'
-			);
-		}
-		if (isset($_GET['on-demand'])){
-			$filter[] = array(
-				'key' => 'delivery_method',
-				'value' => '"On-Demand"',
-				'compare' => 'LIKE'
-			);
-		}
-
-		//handle accreditation
-		if (isset($_GET['accredited'])) {
-			$filter[] = array(
-				'key' => 'accredited',
-				'value'=> 1
-			);
-		}
-
-		//handle Credentials
-		if (isset($_GET['ifma_credential']) && $_GET['ifma_credential'] === "fmp") {
-			$args['category'] = '6';
-		}
-		if (isset($_GET['ifma_credential']) && $_GET['ifma_credential'] === "sfp") {
-			$args['category'] = '7';
-		}
-		if (isset($_GET['ifma_credential']) && $_GET['ifma_credential'] === "cfm") {
-			$args['category'] = '8';
-		}
-
-    $args['meta_query'] = $filter;
-
-		$hits[0] = get_posts($args);
-	} else {
-		$results = array();
+   // now filter the results
+   	$results = array();
 		foreach ($hits[0] as $hit) {
 			//start filtering by start date and if no date is specified use current date.
-			if (isset($wp_query->query_vars['start_date'])) {
-				if (date(Ymd,strtotime($wp_query->query_vars['start_date'])) >= the_field('start_date',$hit->ID)) {
+
+			if (isset($wp_query->query_vars['start_date']) && get_field('start_date',$hit->ID) != null) {
+				if (date(Ymd,strtotime($wp_query->query_vars['start_date'])) >= date(Ymd,get_field('start_date',$hit->ID))) {
 					$results[] = $hit;
 				}
 			} else {
-				if (date(Ymd,strtoTime('now')) >= the_field('start_date',$hit->ID)) {
+
+				if (date(Ymd,strtoTime('now')) >= date(Ymd,get_field('start_date',$hit->ID))) {
 					$results[] = $hit;
 				}
+
 			}		
 
 			//check that the result matches the correct credential
 			if (isset($wp_query->query_vars['ifma_credential'])) {
-				if ($wp_query->query_vars['ifma_credential']==='fmp' && !in_category("fmp",$hit)) {
+				if ($wp_query->query_vars['ifma_credential']==='fmp' && !in_category('fmp',$hit)) {
 					array_pop($results);
 					continue;
 				} 
@@ -227,7 +159,6 @@ function filter_courses($hits) {
 			}
 		}
         $hits[0] = $results;
-	}
 	return $hits;
 }
 

@@ -249,3 +249,7 @@ I figured out a better way to handle returning the results from the post query: 
 The initial website is up. Now I need to write a quick script which will consume the json that I feed it and turn it into courses for the website.
 
 
+#### from May 27, 2013:
+I figured out a better way to handle returning the results from the post query: pull in all the courses, and then sort them. this would allow us to use the same code for filtering rather than using two completely different ways of returning results.
+
+
