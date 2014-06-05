@@ -4,13 +4,12 @@
  Description:   child theme for IFMA
  Author:        Jonathan Camara
  Author URI:    http://www.ifma.org
- Template:      IFMA
  Version:       0.0.4
  Tags: IFMA, white, bootstrap, responsive
  GitHub Theme URI: https://github.com/italy-portugal/IFMA-Courses
  GitHub Branch: develop
 */
-@import url("../IFMA/style.css");
+@import url("css/bootstrap.min.css");
 /* front page styling */
 .initial-facets { margin-bottom: 2em; }
 
