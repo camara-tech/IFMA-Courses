@@ -14,6 +14,17 @@ function include_indexjs() {
 add_action('wp_enqueue_scripts','include_indexjs');
 
 
+# let's register all of the menus
+
+function register_menus() {
+  register_nav_menus(array(
+    'micro-nav-menu' => __('Micro Nav'),
+    'utility-menu' => __('Utility'),
+    'navigation-menu' => __('Navigation') ) );
+}
+add_action('init', 'register_menus');
+
+
 # let's modify the admin menu
 
 add_action('admin_menu','remove_default_post_type');
