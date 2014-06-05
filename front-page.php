@@ -1,7 +1,7 @@
 <?php //according to the wordpress codex, this is the default front-page for the website.
 get_header(); ?>
 <?php if (is_user_logged_in()) {?>
-<form role="search" action="/" method="get" class="search-form">
+  <form role="search" action="<?php echo home_url('/'); ?>" method="get" class="search-form">
     <label class="screen-reader-text" for="s"><h2>Search Courses</h2></label>
     <br />
     <input type="text" name="s" id="s" placeholder="What would you like to learn today?"/>
