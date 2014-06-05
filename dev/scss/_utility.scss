@@ -1,0 +1,29 @@
+.utility {
+	background-color: $IFMA_Blue;
+	width:100%;
+	margin-bottom:1%;
+	.inner{
+		padding-bottom:8px;
+		.links {
+			float:right;
+			padding:4px 20px;
+			margin-right: 45px;
+			margin-top: 3px;
+		}
+	}
+	a{
+		background-color:$IFMA_Blue;
+		color:#FFF;
+		font-size:1.1em;
+		font-weight: bold;
+		padding: 8px 20px;
+		text-decoration:none;
+		width:200px;
+		box-shadow:0 5px 2px -3px rgba(0,0,0,0.3);
+
+		&:hover{
+			background-color:#2990c1;
+		}
+	}
+
+}
