@@ -1,1 +1,7 @@
-<?php echo "footer file"; ?>
+<?php echo "footer file";
+
+wp_footer();
+
+?>
+</body>
+</html>
