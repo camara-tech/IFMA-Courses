@@ -1,6 +1,6 @@
 <div class="header">
 <div class="inner">
-<!--logo stuff-->
+<?php get_header_image(); ?>
 
 </div>
 </div>

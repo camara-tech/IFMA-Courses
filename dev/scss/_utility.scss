@@ -2,13 +2,16 @@
 	background-color: $IFMA_Blue;
 	width:100%;
 	margin-bottom:1%;
-	.inner{
+	.container{
 		padding-bottom:8px;
 		.menu {
 			float:right;
 			padding:4px 20px;
 			margin-right: 45px;
 			margin-top: 3px;
+		}
+		&:after{
+			content:normal;
 		}
 	}
 	a{
@@ -24,6 +27,12 @@
 		&:hover{
 			background-color:#2990c1;
 		}
+	}
+
+	ul{
+		list-style:none outside none;
+		margin:0;
+		padding:0;
 	}
 
 }

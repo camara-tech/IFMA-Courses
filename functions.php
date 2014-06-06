@@ -13,6 +13,19 @@ function include_indexjs() {
 }
 add_action('wp_enqueue_scripts','include_indexjs');
 
+function include_bootstrap() {
+  wp_register_script('bootstrapjs',get_stylesheet_directory_uri().'/js/bootstrap.min.js', array('jquery'),false,true);
+  wp_enqueue_script('bootstrapjs');
+}
+add_action('wp_enqueue_scripts','include_bootstrap');
+
+#let's get the header image working
+$args = array(
+	'width' => 300,
+	'height' => 200,
+	'default-image' => get_template_directory_uri() . '/images/header.jpg',
+);
+add_theme_support('custom-header', $args);
 
 # let's register all of the menus
 
@@ -40,7 +53,7 @@ function remove_default_post_type() {
   remove_menu_page('options-general.php');
   remove_menu_page('users.php');
   }
-  
+
 }
 
 add_action('wp_before_admin_bar_render', 'modify_admin_bar');
@@ -127,24 +140,24 @@ function filter_courses($hits) {
 					$results[] = $hit;
 				}
 
-			}		
+			}
 
 			//check that the result matches the correct credential
 			if (isset($wp_query->query_vars['ifma_credential'])) {
 				if ($wp_query->query_vars['ifma_credential']==='fmp' && !in_category('fmp',$hit)) {
 					array_pop($results);
 					continue;
-				} 
+				}
 				elseif ($wp_query->query_vars['ifma_credential']==='sfp'&& !in_category('sfp',$hit)) {
 					array_pop($results);
 					continue;
-				}	
+				}
 				elseif ($wp_query->query_vars['ifma_credential']==='cfm' && !in_category('cfm',$hit)) {
 					array_pop($results);
 					continue;
 				}
 			}
-			// remove those without the specified delivery method		
+			// remove those without the specified delivery method
 			if (isset($wp_query->query_vars['online']) && !in_array('online', get_field('delivery_method',$hit->ID))) {
 				array_pop($results);
 				continue;
