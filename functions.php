@@ -5,14 +5,14 @@ function include_font_awesome() {
 	wp_enqueue_style('font-awesome.css');
 }
 add_action('wp_enqueue_scripts','include_font_awesome');
-
+# let's include the local javascript file
 function include_indexjs() {
 	wp_register_script('indexjs',get_stylesheet_directory_uri().'/js/index.min.js', array('jquery'), false, true);
 
 	wp_enqueue_script('indexjs');
 }
 add_action('wp_enqueue_scripts','include_indexjs');
-
+# let's make sure to include bootstrap itself.
 function include_bootstrap() {
   wp_register_script('bootstrapjs',get_stylesheet_directory_uri().'/js/bootstrap.min.js', array('jquery'),false,true);
   wp_enqueue_script('bootstrapjs');
@@ -28,6 +28,23 @@ $args = array(
 );
 add_theme_support('custom-header', $args);
 
+#let's get the footer image working
+function IFMA_customize_register( $wp_customize) {
+  #add a new setting
+  $wp_customize->add_setting('footer_image_setting',array('default' => get_template_directory_uri() . '/images/footer.png'));
+  #add a new section
+  $wp_customize->add_section('footer_image_section',array('title' => __('Footer Image','IFMA-Courses')));
+  #add a control so we can change stuff
+  $wp_customize->add_control(new WP_Customize_Image_Control( $wp_customize, 'footer_image_control',array(
+    'label' => __('Footer Image', 'IFMA-Courses'),
+    'section' => 'footer_image_section',
+    'settings' => 'footer_image_setting'
+  )));
+   #
+}
+
+add_action('customize_register','IFMA_customize_register');
+
 # let's register all of the menus
 
 function register_menus() {
@@ -37,6 +54,19 @@ function register_menus() {
     'navigation-menu' => __('Navigation') ) );
 }
 add_action('init', 'register_menus');
+
+# let's register widget areas
+function footer_widget_init() {
+  register_sidebar( array(
+    'name' => 'Footer 1',
+    'id' => 'footer1',
+    'before_widget' => '<div>',
+    'after_widget' => '</div>',
+    'before_title' => '<h2 class="rounded">',
+    'after_title' => '</h2>',
+  ) );
+}
+add_action('widgets_init', 'footer_widget_init');
 
 
 # let's modify the admin menu
