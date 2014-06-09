@@ -42,8 +42,17 @@ function IFMA_customize_register( $wp_customize) {
   )));
    #
 }
-
 add_action('customize_register','IFMA_customize_register');
+
+# let's get the title tage working
+
+add_filter('wp_title','IFMA_homepage_title');
+function IFMA_homepage_title($title) {
+  if (empty ($title) && (is_home() || is_front_page())){
+    return __(get_bloginfo('name'), 'theme_domain') . ' | ' . get_bloginfo('description');
+  }
+  return $title;
+}
 
 # let's register all of the menus
 
