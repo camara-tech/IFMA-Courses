@@ -1,6 +1,6 @@
 <div class="header">
-<div class="inner">
-<?php get_header_image(); ?>
+<div class="container">
+<img src="<?php header_image(); ?>" alt="IFMA Logo" width="300"/>
 
 </div>
 </div>
