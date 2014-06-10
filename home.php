@@ -1,14 +1,14 @@
 <?php get_header(); ?>
 <div id="content">
     <div class="row">
-      <?php get_template_part('template-part', 'search'); ?>
-<div class="col-lg-8 main-content">
-    <?php // theloop
-                if ( have_posts() ) : while ( have_posts() ) : the_post();
-                    ?>
-                       <div <?php post_class(); ?>>
+      <?php get_template_part('templates/template-part', 'search'); ?>
+      <div class="main-content">
+      <?php // theloop
+      if ( have_posts() ) : while ( have_posts() ) : the_post();
+        ?>
+        <div <?php post_class(); ?>>
 
-                            <article class="container course-list">
+            <article class="container course-list">
                             <h2 class="course-title">
                                 <a href="<?php the_permalink(); ?>" title="<?php echo esc_attr( sprintf( __( 'Permalink to %s', 'devdmbootstrap3' ), the_title_attribute( 'echo=0' ) ) ); ?>" rel="bookmark"><?php the_title(); ?></a>
                             </h2>
@@ -60,5 +60,7 @@
 </div>
 
     </div>
-
+</div>
+</div>
+</div>
 <?php get_footer(); ?>
