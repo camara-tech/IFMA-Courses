@@ -20,6 +20,7 @@
 		font-size:1.1em;
 		font-weight: bold;
 		padding: 8px 20px;
+		margin: 0 2px;
 		text-decoration:none;
 		width:200px;
 		box-shadow:0 5px 2px -3px rgba(0,0,0,0.3);
@@ -33,6 +34,9 @@
 		list-style:none outside none;
 		margin:0;
 		padding:0;
+		li {
+			float:left;
+		}
 	}
 
 }
