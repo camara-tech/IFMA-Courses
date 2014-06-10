@@ -66,9 +66,9 @@ add_action('init', 'register_menus');
 
 # let's register widget areas
 function footer_widget_init() {
-  register_sidebar( array(
-    'name' => 'Footer 1',
-    'id' => 'footer1',
+  register_sidebars( 2, array(
+    'name' => 'Footer %d',
+    'id' => 'footer',
     'before_widget' => '<div>',
     'after_widget' => '</div>',
     'before_title' => '<h2 class="rounded">',

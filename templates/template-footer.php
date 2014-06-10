@@ -2,11 +2,17 @@
 <div class="container">
 
 <!-- footer logo -->
+<div class="col-md-4">
 <img src="<?php echo esc_url(get_theme_mod('footer_image_setting')); ?>" alt="IFMA Logo" />
+</div>
 <!-- footer menu 1-->
-<?php if (dynamic_sidebar('footer1')) : else : endif; ?>
+<div class="col-md-4">
+<?php if (dynamic_sidebar('footer-1')) : else : endif; ?>
+</div>
 <!-- footer Menu 2-->
-<?php if (dynamic_sidebar('footer2')) : else: endif; ?>
+<div class="col-md-4">
+<?php if (dynamic_sidebar('footer-2')) : else: endif; ?>
+</div>
 <!-- contact information-->
 </div>
 </div>
