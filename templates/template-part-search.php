@@ -4,7 +4,7 @@
 <div class="search-form">
     <label class="screen-reader-text" for="s"><h2>Search Courses</h2></label><br />
     <input type="text" name="s" id="s" placeholder="What would you like to learn today?"/>
-    <input type="submit" id="searchsubmit" value="Go" class="fa btn btn-default" />
+    <input type="submit" id="searchsubmit" value="Go" class="btn btn-default" />
 </div>
 
 <div class="facets">
@@ -124,13 +124,4 @@ foreach ($fields as $field){
 </div>
 <?php } ?>
 
-
-    <div class="debug">
-        <pre>
-            <?php
-
-            ?>
-        </pre>
-    </div>
-</form>	
-
+</form>

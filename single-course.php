@@ -12,6 +12,9 @@
         <?php // theloop
                 if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
                         <div <?php post_class(); ?>>
+                          <?php if ($_SERVER['HTTP_REFERER']) {
+                            echo "<p class='search-return'><a href='javascript:history.go(-1)'><< Return to Search Results</a></p>";
+                          } ?>
 
                             <h2 class="page-header course-title"><?php the_title() ;?></h2>
                             <div class="sidebar col-lg-4">
@@ -42,8 +45,11 @@
                           </div>
 
                             <div class="course-details">
+                            <?php if (get_field('start_date')){ ?>
                             <p><i class="fa fa-calendar"></i> <?php echo date('M d, Y',strtotime(get_field('start_date'))); ?></p>
-
+                            <?php } else { ?>
+                              <p><i class="fa fa-calendar"></i>Anytime</p>
+                            <?php } ?>
 
                             <p><i class="fa fa-road"></i> <?php if (is_array(get_field('delivery_method'))) {
                               array_walk(get_field('delivery_method'),'walk_delivery_method');

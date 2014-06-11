@@ -5,12 +5,12 @@ get_header(); ?>
     <label class="screen-reader-text" for="s"><h2>Search Courses</h2></label>
     <br />
     <input type="text" name="s" id="s" placeholder="What would you like to learn today?"/>
-    <input type="submit" id="searchsubmit" value="Go" class="fa btn btn-default" />
+    <input type="submit" id="searchsubmit" value="Go" class="btn btn-default" />
     <div class="initial-facets">
-        <button name="ifma_credential" value="fmp" type="submit" class="filter btn btn-default"><img src="http://cdn.ifma.org/sfcdn/education/fmp-logo_color_med836DBD92634D.jpg?sfvrsn=2" alt="Facility Management Professional" class="img-responsive img-rounded">FMP</button>
-        <button name="ifma_credential" value="sfp" type="submit" class="filter btn btn-default"><img src="http://cdn.ifma.org/sfcdn/education/sfp-logo_color_medF85909A67844.jpg?sfvrsn=2" alt="Sustainability Facility Professional" class="img-responsive img-rounded">SFP</button>
-        <button name="ifma_credential" value="cfm" type="submit" class="filter btn btn-default"><img src="http://cdn.ifma.org/sfcdn/education/cfm-logo_color_med182CC468D797.jpg?sfvrsn=2" alt="Certified Facility Manager" class="img-responsive img-rounded">CFM</button>
-        <button name="ifma_credential" value="all" type="submit" class="filter btn btn-default"><img src="http://cdn.ifma.org/sfcdn/education/new_ifma_creds_compass_3in.png?sfvrsn=0" alt="All" class="img-responsive img-rounded">All</button>
+        <button name="ifma_credential" value="fmp" type="submit" class="filter btn btn-default"><img src="<?php echo get_template_directory_uri() . '/images/fmp-logo_color_med836DBD92634D.jpg'; ?>" alt="View all FMP Courses" class="center-block img-rounded"></button>
+        <button name="ifma_credential" value="sfp" type="submit" class="filter btn btn-default"><img src="<?php echo get_template_directory_uri() . '/images/sfp-logo_color_medF85909A67844.jpg'; ?>" alt="View all SFP Courses" class="center-block img-rounded"></button>
+        <button name="ifma_credential" value="cfm" type="submit" class="filter btn btn-default"><img src="<?php echo get_template_directory_uri() . '/images/cfm-logo_color_med182CC468D797.jpg'; ?>" alt="View all CFM Courses" class="center-block img-rounded"></button>
+        <button name="ifma_credential" value="all" type="submit" class="filter btn btn-default"><img src="<?php echo get_template_directory_uri() . '/images/new_ifma_creds_compass_3in.png'; ?>" alt="View all courses" class="center-block img-rounded"></button>
     </div>
 </form>
 <?php } else { ?>

@@ -76,6 +76,11 @@
 	margin: 1%;
 	width: 11em;
 	height: 11em;
+	background-color: white;
+	background-image: none;
+	img {
+		width:7em;
+	}
 }
 
 #s {
@@ -92,6 +97,7 @@
 
 #searchsubmit {
 	display: inline-block;
+    margin-bottom:1px;
 }
 
 .search-form {
@@ -100,6 +106,7 @@
 
 .search-form label {
 	width: 100%;
+
 }
 
 /* rules for the single-course page */
