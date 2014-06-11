@@ -1,0 +1,41 @@
+.utility {
+	background-color: $IFMA_Blue;
+	width:100%;
+	margin-bottom:2.3em;
+	.container{
+		padding-bottom:8px;
+		.menu {
+			float:right;
+			padding:4px 10px;
+			margin-top: 3px;
+		}
+		&:after{
+			content:normal;
+		}
+	}
+	a{
+		background-color:$IFMA_Blue;
+		color:#FFF;
+		font-size:1.1em;
+		font-weight: bold;
+		padding: 8px 20px;
+		margin: 0 2px;
+		text-decoration:none;
+		width:200px;
+		box-shadow:0 5px 2px -3px rgba(0,0,0,0.3);
+
+		&:hover{
+			background-color:#2990c1;
+		}
+	}
+
+	ul{
+		list-style:none outside none;
+		margin:0;
+		padding:0;
+		li {
+			float:left;
+		}
+	}
+
+}

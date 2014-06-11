@@ -77,16 +77,16 @@ Based upon my notes and our emails, we also need to know the following informati
 These different fields of information could be categorized as follows:(pulling from the IFMA.org events calendar)
 
 - Course Information
-    - Name
-    - Description/Course Syllabus
-    - Provided By
-    - Start Date
-    - End Date
+    - Name -> courses
+    - Description/Course Syllabus -> temporarily put contact information
+    - Provided By -> Name
+    - Start Date -> Start Date
+    - End Date -> null
     - Delivery method(online, on-site, scheduled, on demand,etc.)
-    - Website URL
+    - Website URL -> URL
     - Registration URL
     - College Accredited (yes or no)
-    - Credential (FMP, SFP, CFM)
+    - Credential (FMP, SFP, CFM) -> Extract from courses
     - Has CEU
         - number of CEU
     - Level
@@ -94,13 +94,13 @@ These different fields of information could be categorized as follows:(pulling f
     - Location (links to Location Content Type)
 - Location (offer the ability to lookup/autofill the information?)
     - Full Address
-    	- Country
-        - State/Province (if applicable)
-        - City
+    	- Country -> country
+        - State/Province (if applicable) -> state
+        - City -> city
         - Street
         - Zip code/postal code (if applicable)
-    - Latitude
-    - Longitude
+    - Latitude -> latitude
+    - Longitude -> longitude
     - School/Building Name
 - Instructor (Are the instructors different from the contacts?)
     - First name
@@ -145,9 +145,9 @@ The Search Results will contain the following information:
 - Provided By
 - Summary/Description
 - College Accredited
--
 
----
+
+-----
 
 ### Questions:
 
@@ -242,6 +242,14 @@ For phase 2: I'm currently speculating on the following:
 2. adding a calendar view and map view
 3. reworking the frontend and backend to be more separated, and thus take better advantage of modern web technologies
 
+#### from May 27, 2014:
+I figured out a better way to handle returning the results from the post query: pull in all the courses, and then sort them. this would allow us to use the same code for filtering rather than using two completely different ways of returning results.
+
+#### from May 29, 2014
+The initial website is up. Now I need to write a quick script which will consume the json that I feed it and turn it into courses for the website.
+
+
 #### from May 27, 2013:
 I figured out a better way to handle returning the results from the post query: pull in all the courses, and then sort them. this would allow us to use the same code for filtering rather than using two completely different ways of returning results.
+
 

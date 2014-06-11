@@ -5,13 +5,89 @@ function include_font_awesome() {
 	wp_enqueue_style('font-awesome.css');
 }
 add_action('wp_enqueue_scripts','include_font_awesome');
-
+# let's include the local javascript file
 function include_indexjs() {
-	wp_register_script('indexjs',get_stylesheet_directory_uri().'/js/index.js', array('jquery'), false, true);
+	wp_register_script('indexjs',get_stylesheet_directory_uri().'/js/index.min.js', array('jquery'), false, true);
 
 	wp_enqueue_script('indexjs');
 }
 add_action('wp_enqueue_scripts','include_indexjs');
+# let's make sure to include bootstrap itself.
+function include_bootstrap() {
+  wp_register_script('bootstrapjs',get_stylesheet_directory_uri().'/js/bootstrap.min.js', array('jquery'),false,true);
+  wp_enqueue_script('bootstrapjs');
+}
+add_action('wp_enqueue_scripts','include_bootstrap');
+
+#let's get the header image working
+$args = array(
+	'width' => 300,
+	'height' => 200,
+	'default-image' => get_template_directory_uri() . '/images/header.jpg',
+	'uploads' => true,
+);
+add_theme_support('custom-header', $args);
+
+#let's get the footer image working
+function IFMA_customize_register( $wp_customize) {
+  #add a new setting
+  $wp_customize->add_setting('footer_image_setting',array('default' => get_template_directory_uri() . '/images/footer.png'));
+  #add a new section
+  $wp_customize->add_section('footer_image_section',array('title' => __('Footer Image','IFMA-Courses')));
+  #add a control so we can change stuff
+  $wp_customize->add_control(new WP_Customize_Image_Control( $wp_customize, 'footer_image_control',array(
+    'label' => __('Footer Image', 'IFMA-Courses'),
+    'section' => 'footer_image_section',
+    'settings' => 'footer_image_setting'
+  )));
+   #
+}
+add_action('customize_register','IFMA_customize_register');
+
+# let's get the title tage working
+
+add_filter('wp_title','IFMA_homepage_title');
+function IFMA_homepage_title($title) {
+  if (empty ($title) && (is_home() || is_front_page())){
+    return __(get_bloginfo('name'), 'theme_domain') . ' | ' . get_bloginfo('description');
+  }
+  return $title;
+}
+
+# let's register all of the menus
+
+function register_menus() {
+  register_nav_menus(array(
+    'micro-nav-menu' => __('Micro Nav'),
+    'utility-menu' => __('Utility'),
+    'navigation-menu' => __('Navigation') ) );
+}
+add_action('init', 'register_menus');
+
+# let's register widget areas
+function footer_widget_init() {
+  register_sidebars( 2, array(
+    'name' => 'Footer %d',
+    'id' => 'footer',
+    'before_widget' => '<div>',
+    'after_widget' => '</div>',
+    'before_title' => '<h2 class="rounded">',
+    'after_title' => '</h2>',
+  ) );
+}
+add_action('widgets_init', 'footer_widget_init');
+
+function sidebar_widget_init() {
+	register_sidebar( array(
+		'name' => 'Sidebar',
+		'id' => 'sidebar',
+		'before_widget' => '<div>',
+		'after_widget' => '</div>',
+		'before_title' => '<h2 class="rounded">',
+		'after_title' => '</h2>',
+	));
+}
+add_action('widgets_init', 'sidebar_widget_init');
 
 
 # let's modify the admin menu
@@ -29,7 +105,7 @@ function remove_default_post_type() {
   remove_menu_page('options-general.php');
   remove_menu_page('users.php');
   }
-  
+
 }
 
 add_action('wp_before_admin_bar_render', 'modify_admin_bar');
@@ -116,24 +192,24 @@ function filter_courses($hits) {
 					$results[] = $hit;
 				}
 
-			}		
+			}
 
 			//check that the result matches the correct credential
 			if (isset($wp_query->query_vars['ifma_credential'])) {
 				if ($wp_query->query_vars['ifma_credential']==='fmp' && !in_category('fmp',$hit)) {
 					array_pop($results);
 					continue;
-				} 
+				}
 				elseif ($wp_query->query_vars['ifma_credential']==='sfp'&& !in_category('sfp',$hit)) {
 					array_pop($results);
 					continue;
-				}	
+				}
 				elseif ($wp_query->query_vars['ifma_credential']==='cfm' && !in_category('cfm',$hit)) {
 					array_pop($results);
 					continue;
 				}
 			}
-			// remove those without the specified delivery method		
+			// remove those without the specified delivery method
 			if (isset($wp_query->query_vars['online']) && !in_array('online', get_field('delivery_method',$hit->ID))) {
 				array_pop($results);
 				continue;

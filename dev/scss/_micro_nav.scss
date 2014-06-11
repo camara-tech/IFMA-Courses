@@ -1,0 +1,33 @@
+.micro_nav{
+	background-color: #6D6e71;
+	border-bottom: 5px solid #414042;
+	height:auto;
+	min-height:24px;
+	width:100%;
+	display:none;
+	@media (min-width:900px) {
+		display:block;
+	}
+	ul {
+		list-style:none outside none;
+		margin:0;
+		padding:0;
+		li{
+			color:#BCB3C0;
+			float: left;
+			font-size:0.9em;
+			line-height: 16px;
+			margin: 1px 3px;
+			vertical-align:middle;
+			a {
+				color:#fff;
+				font-size: 0.89em;
+				text-decoration:none;
+				&:hover{
+					text-decoration:underline;
+				}
+
+			}
+		}
+	}
+}

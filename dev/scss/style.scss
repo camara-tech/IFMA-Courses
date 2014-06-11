@@ -1,0 +1,132 @@
+@import 'bits';
+@import 'normalize';
+@import 'micro_nav';
+@import 'header';
+@import 'footer';
+@import 'navigation';
+@import 'utility';
+
+@import url("./css/bootstrap.min.css");
+@import url("./css/bootstrap-theme.min.css");
+
+/* front page styling */
+.initial-facets {
+	margin-bottom: 2em;
+}
+
+/*template-part-search styling */
+/* Course title for the list of courses */
+.course-list {
+	border: #bbb solid thin;
+	box-shadow: 2px 3px 8px #ddd;
+	padding: 10px 20px;
+	margin-bottom: 20px;
+	-webkit-border-radius: 0.5em;
+	-moz-border-radius: 0.5emx;
+	border-radius: 0.5em;
+	width: 90%;
+	margin-right: auto;
+	margin-right: auto;
+	float: none;
+}
+
+.course-title {
+	margin: 0.5em 0 0.4em;
+	padding-bottom: 9px;
+	border-bottom: 1px solid #eee;
+}
+
+.course-details p {
+	display: inline-block;
+	padding-right: 10px;
+}
+
+.screen-reader-text {
+	font-size: 1em;
+}
+
+.filters {
+	display: block;
+}
+
+.facets {
+	margin-top: -20px;
+	padding: 0 10%;
+	width: 100%;
+	background-color: #ddd;
+}
+
+.facet-date, .facet-checkbox, .facet-true_false, .facet-category {
+	display: inline-block;
+	vertical-align: top;
+	margin-right: 1.5em;
+	text-align: center;
+}
+
+.facet-date input[type="date"] {
+	line-height: 1em;
+}
+
+.first-search {
+	display: none;
+}
+
+.filter {
+	border: solid;
+	margin: 1%;
+	width: 11em;
+	height: 11em;
+	background-color: white;
+	background-image: none;
+	img {
+		width:7em;
+	}
+}
+
+#s {
+	-webkit-border-radius: 0.5em;
+	-moz-border-radius: 0.5em;
+	border-radius: 0.5em;
+	border: 1px #ddd solid;
+	height: 2.7em;
+	width: 80%;
+	margin-bottom: 3em;
+	padding-left: 1em;
+	padding-right: 1em;
+}
+
+#searchsubmit {
+	display: inline-block;
+    margin-bottom:1px;
+}
+
+.search-form {
+	text-align: center;
+}
+
+.search-form label {
+	width: 100%;
+
+}
+
+/* rules for the single-course page */
+.course-info {
+	padding: 1em;
+	border-radius: 0.5em;
+	border: 1px #ddd solid;
+}
+
+.sidebar {
+	float:right;
+	margin-bottom:1em;
+}
+
+.course-credential {
+	margin-top: 1em;
+}
+
+.course-credential img {
+	display: block;
+	margin-right: auto;
+	margin-left: auto;
+}
