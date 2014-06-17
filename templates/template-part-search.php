@@ -1,13 +1,15 @@
 <!-- search -->
-<form role="search" action="<?php echo home_url('/'); ?>" method="get" class="searchform">
+<form role="search" action="<?php echo home_url('/'); ?>" method="get" class="searchform col-lg-4 col-md-4">
 
-<div class="search-form">
-    <label class="screen-reader-text" for="s"><h2>Search Courses</h2></label><br />
-    <input type="text" name="s" id="s" placeholder="What would you like to learn today?"/>
-    <input type="submit" id="searchsubmit" value="Go" class="fa btn btn-default" />
+
+<div class="search-term">
+    <h2> Search Courses</h2> 
+    <label class="screen-reader-text" for="s">By Keyword(s)</label>
+    <input type="text" name="s" id="s" />
 </div>
 
 <div class="facets">
+<h3>Advanced Search</h3>
 <?php
 
 //this theme requires Advanced custom fields...until I can get a plugin working.
@@ -41,7 +43,7 @@ foreach($acf_group_meta as $meta_field) {
 foreach ($fields as $field){
   if ($field['type'] === 'date_picker' && $field['name'] === 'start_date') {
       echo "<div class='facet-date'>";
-      echo "<label for ='{$field['name']}'>{$field['label']}</label><br />";
+      echo "<label for ='{$field['name']}'>{$field['label']}</label>";
       echo "<input type='date' name='{$field['name']}' value=", date("Y-m-d",strtotime("now")). " placeholder='{$field['display_format']}'\/>";
       echo "</div>";
   }
@@ -51,7 +53,7 @@ foreach ($fields as $field){
 foreach ($fields as $field){
   if ($field['type'] === 'checkbox') {
       echo "<div class='facet-checkbox'>";
-      echo "<label for ='{$field['name']}'>{$field['label']}</label><br />";
+      echo "<label for ='{$field['name']}'>{$field['label']}</label>";
       echo "<select name={$field['name']} id={$field['name']} multiple='true'>";
       foreach($field['choices'] as $choice_value=>$choice_label) {
           if (isset($_GET['delivery_method']) && $_GET['delivery_method'] === $choice_value) {
@@ -69,7 +71,7 @@ foreach ($fields as $field){
 foreach ($fields as $field){
   if ($field['type']==='true_false') {
       echo "<div class=facet-true_false>";
-      echo "<label for ='{$field['name']}'>{$field['label']}</label><br />";
+      echo "<label for ='{$field['name']}'>{$field['label']}</label>";
       if (isset($_GET[$field['name']]) && $_GET[$field['name']]==='on'){
           echo '<input type="checkbox" name="'.$field['name'].'" id="'.$field['name'].'" checked="true" />';
       } else {
@@ -86,7 +88,7 @@ foreach ($fields as $field){
   if ($field['type']==='taxonomy' && $field['taxonomy']==='category'){
       $categories = get_categories(array('orderby'=>'id'));
       echo "<div class='facet-category'>";
-      echo "<label for={$field['name']}>{$field['label']}</label><br />";
+      echo "<label for={$field['name']}>{$field['label']}</label>";
       echo "<select name={$field['name']} id={$field['name']}>";
       echo "<option value='all'>All</option>";
       foreach ($categories as $category) {
@@ -104,33 +106,6 @@ foreach ($fields as $field){
 ?>
 </div>
 
-    <?php
+    <input type="submit" id="searchsubmit" value="View Results" class="btn btn-default" />
 
-    if (!is_single()) {
-    //make sure to cleanup the URL, so that we don't unecessarily increase the size of the query string
-    parse_str($_SERVER['QUERY_STRING'],$query_string);
-    if (isset($_GET['orderby'])) {
-        unset($query_string['orderby']);
-    }
-    if (isset($_GET['meta_key'])) {
-    unset($query_string['meta_key']);
-    }
-
-    if (isset($_GET['meta_value'])) {
-    unset($query_string['meta_value']);
-    } ?>
-<div class="filters">
-    <p>Sort By: <a href="?<?php echo http_build_query($query_string)?>&meta_key=start_date&orderby=meta_value_num">Date</a> | <a href="?<?php echo http_build_query($query_string)?>&meta_key=map_location&orderby=meta_value">Location</a> | <a href="?<?php echo http_build_query($query_string) ?>&orderby=title">A-Z</a></p>
-</div>
-<?php } ?>
-
-
-    <div class="debug">
-        <pre>
-            <?php
-
-            ?>
-        </pre>
-    </div>
-</form>	
-
+</form>
