@@ -2,7 +2,8 @@
 <div id="content">
     <div class="row">
       <?php get_template_part('templates/template-part', 'search'); ?>
-      <div class="main-content">
+      <div class="main-content col-lg-8 col-md-8">
+      <?php get_template_part('templates/template','sort'); ?>
       <?php // theloop
       if ( have_posts() ) : while ( have_posts() ) : the_post();
         ?>
@@ -39,7 +40,7 @@
                             <?php the_excerpt(); ?>
 
                             <a href="<?php echo get_permalink(); ?>" class="btn btn-default pull-right"> Read More...</a>
-                            </article
+                            </article>
                             <?php wp_link_pages(); ?>
                             <?php get_template_part('template-part', 'postmeta'); ?>
                             <?php  if ( comments_open() ) : ?>
