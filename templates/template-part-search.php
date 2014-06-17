@@ -43,8 +43,34 @@ foreach($acf_group_meta as $meta_field) {
 foreach ($fields as $field){
   if ($field['type'] === 'date_picker' && $field['name'] === 'start_date') {
       echo "<div class='facet-date'>";
-      echo "<label for ='{$field['name']}'>{$field['label']}</label>";
-      echo "<input type='date' name='{$field['name']}' value=", date("Y-m-d",strtotime("now")). " placeholder='{$field['display_format']}'\/>";
+      echo "<label for='{$field['name']}'>Month</label>";
+      echo "<select name='{$field['name']}[month]'>";
+
+?> 
+        <option>January</option>
+`       <option>February</option>
+        <option>March</option>
+        <option>April</option>
+        <option>May</option>
+        <option>June</option>
+        <option>July</option>
+        <option>August</option>
+        <option>September</option>
+        <option>October</option>
+        <option>November</option>
+        <option>December</option>
+<?php 
+      echo "</select>";
+      echo "<label for='{$field['name']}'>Year</label>";
+      echo "<select name='{$field['name']}[year]'>";
+?>
+    <option>2014</option>
+    <option>2015</option>
+    <option>2016</option>
+    <option>2017</option>
+    
+<?php
+      echo "</select>";
       echo "</div>";
   }
 }
@@ -53,16 +79,14 @@ foreach ($fields as $field){
 foreach ($fields as $field){
   if ($field['type'] === 'checkbox') {
       echo "<div class='facet-checkbox'>";
-      echo "<label for ='{$field['name']}'>{$field['label']}</label>";
-      echo "<select name={$field['name']} id={$field['name']} multiple='true'>";
       foreach($field['choices'] as $choice_value=>$choice_label) {
+          echo "<label for='{$choice_value}'>$choice_label</label>"; 
           if (isset($_GET['delivery_method']) && $_GET['delivery_method'] === $choice_value) {
-          echo "<option value='$choice_value' selected='selected'>$choice_label</option>";
+          echo "<input type='checkbox' name='{$field['choices']}' id='{$choice_value}' checked='true' />";
           } else {
-          echo "<option value='$choice_value'>$choice_label</option>";
+          echo "<input type='checkbox' name='{$field['choices']}' id='{$choice_value}' />";
           }
       }
-      echo '</select>';
       echo "</div>";
   }
 }
