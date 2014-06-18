@@ -10,18 +10,20 @@
         float:none;
 
     }
-    input {
+    input, select {
         height: 2.7em;
-        width: 95%;
+        padding:0.5em 1em;
+        border: 1px solid #ddd;
+        width: 100%;
+        vertical-align:center;
+        margin-bottom:2em;
     }
     input[type="checkbox"]{
         display: inline;
         height: 1em;
-    }
-    label{
-        display:inline-block;
-    }
+        width:0;
         
+    }
 }
 .search-term{
     h2{
@@ -40,15 +42,10 @@
     
 }
 
-
-.screen-reader-text{
-}
-
 #s{
     -webkit-border-radius:0.5em;
     -moz-border-radius:0.5em;
     border-radius: 0.5em;
-    border: 1px #ddd solid;
     padding-left:1em;
     padding-right:1em;
 }
@@ -58,12 +55,20 @@
     margin-bottom:1px;
 }
 
-.facet-date, .facet-checkbox, .facet-true_false, .facet-category{
-    margin-right:1.5em;
+.facet-true_false {
+    display:inline;
+}
+.facet-date select{
+    width: 35%;
+    margin-left: 1%;
+    margin-right:4%;
 }
 
-.facet-date input[type="date"] {
-
+.facet-checkbox, .facet-true_false {
+    label{
+        margin-left:1%;
+        margin-right:4%;
+    }
 }
 
 .filter{

@@ -39,6 +39,22 @@ foreach($acf_group_meta as $meta_field) {
 
 // make sure that we have this laid out the way we want. rather than relying upon the order of the data for the layout.
 
+  // handle everything that is a checkbox
+foreach ($fields as $field){
+  if ($field['type'] === 'checkbox') {
+      echo "<div class='facet-checkbox'>";
+      foreach($field['choices'] as $choice_value=>$choice_label) {
+          if (isset($_GET['delivery_method']) && $_GET['delivery_method'] === $choice_value) {
+          echo "<input type='checkbox' name='{$choice_value}' id='{$choice_value}' checked='true' />";
+          } else {
+          echo "<input type='checkbox' name='{$choice_value}' id='{$choice_value}' />";
+          }
+          echo "<label for='{$choice_value}'>$choice_label</label>"; 
+      }
+      echo "</div>";
+  }
+}
+
 // handle date pickers
 foreach ($fields as $field){
   if ($field['type'] === 'date_picker' && $field['name'] === 'start_date') {
@@ -75,32 +91,18 @@ foreach ($fields as $field){
   }
 }
 
-  // handle everything that is a checkbox
-foreach ($fields as $field){
-  if ($field['type'] === 'checkbox') {
-      echo "<div class='facet-checkbox'>";
-      foreach($field['choices'] as $choice_value=>$choice_label) {
-          echo "<label for='{$choice_value}'>$choice_label</label>"; 
-          if (isset($_GET['delivery_method']) && $_GET['delivery_method'] === $choice_value) {
-          echo "<input type='checkbox' name='{$field['choices']}' id='{$choice_value}' checked='true' />";
-          } else {
-          echo "<input type='checkbox' name='{$field['choices']}' id='{$choice_value}' />";
-          }
-      }
-      echo "</div>";
-  }
-}
 
   // handle all the true/false fields
 foreach ($fields as $field){
   if ($field['type']==='true_false') {
       echo "<div class=facet-true_false>";
-      echo "<label for ='{$field['name']}'>{$field['label']}</label>";
       if (isset($_GET[$field['name']]) && $_GET[$field['name']]==='on'){
           echo '<input type="checkbox" name="'.$field['name'].'" id="'.$field['name'].'" checked="true" />';
       } else {
       echo '<input type="checkbox" name="'.$field['name'].'" id="'.$field['name'].'" />';
       }
+      echo "<label for ='{$field['name']}'>{$field['label']}</label>";
+
 
       echo "</div>";
   }
