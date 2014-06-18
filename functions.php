@@ -176,16 +176,17 @@ function filter_courses($hits) {
     $args = array( 'post_type' => 'course' );
     $hits[0] = get_posts($args);
     }
-
    // now filter the results
    	$results = array();
 		foreach ($hits[0] as $hit) {
 			//start filtering by start date and if no date is specified use current date.
-
-			if (isset($wp_query->query_vars['start_date']) && get_field('start_date',$hit->ID) != null) {
-				if (date(Ymd,strtotime($wp_query->query_vars['start_date'])) >= date(Ymd,get_field('start_date',$hit->ID))) {
+			if (isset($wp_query->query_vars['start_date'])) {
+                $start_date = implode(" ",$wp_query->query_vars['start_date']);
+				if (date(Ymd,strtotime($start_date)) <= date(Ymd,strtotime(strval(get_field('start_date',$hit->ID))))) {
 					$results[] = $hit;
-				}
+                } elseif (get_field('start_date', $hit->ID) == null) {
+					$results[] = $hit;
+                }
 			} else {
 
 				if (date(Ymd,strtoTime('now')) >= date(Ymd,get_field('start_date',$hit->ID))) {
@@ -196,15 +197,15 @@ function filter_courses($hits) {
 
 			//check that the result matches the correct credential
 			if (isset($wp_query->query_vars['ifma_credential'])) {
-				if ($wp_query->query_vars['ifma_credential']==='fmp' && !in_category('fmp',$hit)) {
+				if ($wp_query->query_vars['ifma_credential']==='fmp' && !in_category('fmp',end($results))) {
 					array_pop($results);
 					continue;
 				}
-				elseif ($wp_query->query_vars['ifma_credential']==='sfp'&& !in_category('sfp',$hit)) {
+				elseif ($wp_query->query_vars['ifma_credential']==='sfp'&& !in_category('sfp',end($results))) {
 					array_pop($results);
 					continue;
 				}
-				elseif ($wp_query->query_vars['ifma_credential']==='cfm' && !in_category('cfm',$hit)) {
+				elseif ($wp_query->query_vars['ifma_credential']==='cfm' && !in_category('cfm',end($results))) {
 					array_pop($results);
 					continue;
 				}
@@ -239,3 +240,4 @@ function filter_courses($hits) {
 }
 
 ?>
+
