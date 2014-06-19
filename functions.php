@@ -31,7 +31,7 @@ add_theme_support('custom-header', $args);
 #let's get the footer image working
 function IFMA_customize_register( $wp_customize) {
   #add a new setting
-  $wp_customize->add_setting('footer_image_setting',array('default' => get_template_directory_uri() . '/images/footer.png'));
+  $wp_customize->add_setting('footer_image_setting',array('default' => get_template_directory_uri() . '/images/footer.png', 'type'=> 'option'));
   #add a new section
   $wp_customize->add_section('footer_image_section',array('title' => __('Footer Image','IFMA-Courses')));
   #add a control so we can change stuff
