@@ -2,7 +2,7 @@
 <div id="content">
     <div class="row">
       <?php get_template_part('templates/template-part', 'search'); ?>
-      <div class="main-content col-lg-8 col-md-8">
+      <div class="main-content col-lg-8 col-md-8 col-sm-8">
       <?php get_template_part('templates/template','sort'); ?>
       <?php // theloop
       if ( have_posts() ) : while ( have_posts() ) : the_post();

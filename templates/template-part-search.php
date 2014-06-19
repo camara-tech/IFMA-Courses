@@ -1,5 +1,5 @@
 <!-- search -->
-<form role="search" action="<?php echo home_url('/'); ?>" method="get" class="searchform col-lg-4 col-md-4">
+<form role="search" action="<?php echo home_url('/'); ?>" method="get" class="searchform col-lg-4 col-md-4 col-sm-4">
 
 
 <div class="search-term">
