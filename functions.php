@@ -186,7 +186,7 @@ function filter_courses($hits) {
 					continue;
                 } 
 			} elseif (isset($wp_query->query_vars['start_date']) != true && get_field('start_date',$hit->ID) != null){
-				if (date(Ymd,strtoTime('now')) > date(Ymd,get_field('start_date',$hit->ID))) {
+				if (date(Ymd,strtoTime('now')) > date(Ymd,strtotime(strval(get_field('start_date',$hit->ID))))) {
 					continue;
 				}
 			}
