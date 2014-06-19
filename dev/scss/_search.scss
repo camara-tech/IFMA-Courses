@@ -25,6 +25,19 @@
         
     }
 }
+
+.search-form {
+    text-align:center;
+    #s {
+        height: 2.7em;
+        padding:0.5em 1em;
+        border:1px solid #ddd;
+        width:80%;
+        vertical-align:center;
+        margin-bottom: 2em;
+        display:inline;
+    }
+}
 .search-term{
     h2{
         text-align:center;
