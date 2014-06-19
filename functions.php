@@ -176,63 +176,69 @@ function filter_courses($hits) {
     $args = array( 'post_type' => 'course' );
     $hits[0] = get_posts($args);
     }
-
    // now filter the results
    	$results = array();
 		foreach ($hits[0] as $hit) {
 			//start filtering by start date and if no date is specified use current date.
-
 			if (isset($wp_query->query_vars['start_date']) && get_field('start_date',$hit->ID) != null) {
-				if (date(Ymd,strtotime($wp_query->query_vars['start_date'])) >= date(Ymd,get_field('start_date',$hit->ID))) {
-					$results[] = $hit;
+                $start_date = implode(" ",$wp_query->query_vars['start_date']);
+				if (date(Ymd,strtotime($start_date)) > date(Ymd,strtotime(strval(get_field('start_date',$hit->ID))))) {
+					continue;
+                } 
+			} elseif (isset($wp_query->query_vars['start_date']) != true && get_field('start_date',$hit->ID) != null){
+				if (date(Ymd,strtoTime('now')) > date(Ymd,strtotime(strval(get_field('start_date',$hit->ID))))) {
+					continue;
 				}
-			} else {
-
-				if (date(Ymd,strtoTime('now')) >= date(Ymd,get_field('start_date',$hit->ID))) {
-					$results[] = $hit;
-				}
-
 			}
-
 			//check that the result matches the correct credential
 			if (isset($wp_query->query_vars['ifma_credential'])) {
 				if ($wp_query->query_vars['ifma_credential']==='fmp' && !in_category('fmp',$hit)) {
-					array_pop($results);
 					continue;
 				}
 				elseif ($wp_query->query_vars['ifma_credential']==='sfp'&& !in_category('sfp',$hit)) {
-					array_pop($results);
 					continue;
 				}
 				elseif ($wp_query->query_vars['ifma_credential']==='cfm' && !in_category('cfm',$hit)) {
-					array_pop($results);
 					continue;
 				}
 			}
-			// remove those without the specified delivery method
-			if (isset($wp_query->query_vars['online']) && !in_array('online', get_field('delivery_method',$hit->ID))) {
-				array_pop($results);
-				continue;
-			} elseif (isset($wp_query->query_vars['on-site']) && !in_array('on-site',get_field('delivery_method',$hit->ID))) {
-				array_pop($results);
-				continue;
-			} elseif (isset($wp_query->query_vars['scheduled']) && !in_array('scheduled',get_field('delivery_method',$hit->ID))) {
-				array_pop($results);
-				continue;
-			} elseif (isset($wp_query->query_vars['on-demand']) && !in_array('on-demand',get_field('delivery_method',$hit->ID))) {
-				array_pop($results);
-				continue;
-			}
+
+
 			// check accreditation
 			if (isset($wp_query->query_vars['accredited']) && !get_field('accredited',$hit->ID)) {
-				array_pop($results);
 				continue;
 			}
 			// provided by
 			if (isset($wp_query->query_vars['provided_by']) && $wp_query->query_vars['provided_by'] != the_field('provided_by',$hit->ID)) {
-				array_pop($results);
 				continue;
 			}
+			// remove those without the specified delivery method
+            $suspect = false;
+            if (isset($wp_query->query_vars['online']) && !in_array('online', get_field('delivery_method',$hit->ID))){
+                $suspect = true;
+            } if (isset($wp_query->query_vars['on-site']) && !in_array('on-site', get_field('delivery_method',$hit->ID))) {
+                $suspect = true;
+            } if (isset($wp_query->query_vars['scheduled']) && !in_array('scheduled',get_field('delivery_method',$hit->ID))) {
+                $suspect = true;
+            } if (isset($wp_query->query_vars['on-demand']) && !in_array('on-demand',get_field('delivery_method',$hit->ID))) {
+                $suspect = true;
+			}
+
+            if (isset($wp_query->query_vars['online']) && in_array('online', get_field('delivery_method',$hit->ID))){
+                $suspect = false;
+            } if (isset($wp_query->query_vars['on-site']) && in_array('on-site', get_field('delivery_method',$hit->ID))) {
+                $suspect = false;
+            } if (isset($wp_query->query_vars['scheduled']) && in_array('scheduled',get_field('delivery_method',$hit->ID))) {
+                $suspect = false;
+            } if (isset($wp_query->query_vars['on-demand']) && in_array('on-demand',get_field('delivery_method',$hit->ID))) {
+                $suspect = false;
+			}
+            
+
+            // since hit fell through everything, we can assume it's a good variable
+            if ($suspect == false){
+            $results[]= $hit;
+            }
 		}
         $hits[0] = $results;
 	return $hits;

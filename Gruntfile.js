@@ -22,7 +22,7 @@ module.exports = function(grunt) {
             dist: {
                 options:{
                     style:"compressed",
-                    banner:"/* Theme Name: IFMA Courses Theme\n URI: http://github.com/italy-portugal/IFMA-Courses \n Description: Theme for IFMA Courses Website \n Author: Jonathan Camara \n Author URI: http://www.ifma.org \n Version: 0.0.4 \n Tags: IFMA, white, bootstrap, responsive \n GitHub Theme URI: https://github.com/italy-portugal/IFMA-Courses \n GitHub Branch: develop \n */"
+                    banner:"/* Theme Name: IFMA Courses Theme\n URI: http://github.com/italy-portugal/IFMA-Courses \n Description: Theme for IFMA Courses Website \n Author: Jonathan Camara \n Author URI: http://www.ifma.org \n Version: 0.2.0 \n Tags: IFMA, white, bootstrap, responsive \n GitHub Theme URI: https://github.com/italy-portugal/IFMA-Courses \n GitHub Branch: develop \n */"
                 },
                 files:{
                     "./style.css":"./dev/scss/style.scss"

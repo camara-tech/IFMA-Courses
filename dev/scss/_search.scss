@@ -1,0 +1,124 @@
+.searchform{
+    float:left;
+    border-radius: 0.5em;
+    border: 1px #bbb solid;
+    box-shadow: 2px 3px 8px #ddd;
+    margin-top:2em;
+    padding-bottom:2em;
+    margin-bottom: 2em;
+    @media(max-width:768px){
+        float:none;
+        margin-left: 15px ;
+        margin-right:15px;
+    }
+    input, select {
+        height: 2.7em;
+        padding:0.5em 1em;
+        border: 1px solid #ddd;
+        width: 100%;
+        vertical-align:center;
+        margin-bottom:2em;
+    }
+    input[type="checkbox"]{
+        display: inline;
+        height: 1em;
+    }
+}
+
+.search-form {
+    text-align:center;
+    #s {
+        height: 2.7em;
+        padding:0.5em 1em;
+        border:1px solid #ddd;
+        width:80%;
+        vertical-align:center;
+        margin-bottom: 2em;
+        display:inline;
+    }
+}
+.search-term{
+    h2{
+        text-align:center;
+    }
+    label{
+        width:100%;
+    }
+}
+
+.facets{
+    width:100%;
+    h3{
+        text-align:center;
+    }
+    
+}
+
+#s{
+    -webkit-border-radius:0.5em;
+    -moz-border-radius:0.5em;
+    border-radius: 0.5em;
+    padding-left:1em;
+    padding-right:1em;
+}
+
+#searchsubmit{
+    display: inline-block;
+    margin-bottom:1px;
+}
+
+.facet-true_false {
+    display:inline;
+}
+.facet-date{
+    label{
+        width:10%;
+    }
+    select{
+        width:35%;
+        padding-right:5%;
+        margin-right:3%;
+        margin-left:2%;
+        padding-left:1%;
+    }
+    @media(max-width:1200px){
+        label{
+            width:20%
+        }
+        select{
+            width:70%;
+        }
+    }
+}
+
+.facet-true_false {
+    label{
+        width:40%;
+    }
+    input{
+        width:10%;
+    }
+}
+
+.facet-checkbox {
+    padding-right:0;
+    label{
+        width:40%;
+        padding-left:1%;
+    }
+    input{
+        width:10%;
+    }
+}
+
+.filter{
+    border:solid;
+    margin:1%;
+    width:11em;
+    height: 11em;
+    background-color: white;
+    background-image:none;
+    img{
+        width:7em;
+    }
+}
