@@ -5,8 +5,8 @@
       <div class="main-content col-lg-8 col-md-8 col-sm-8">
       <?php get_template_part('templates/template','sort'); ?>
       <?php // theloop
-      if ( have_posts() ) : while ( have_posts() ) : the_post();
-        ?>
+      if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
+
         <div <?php post_class(); ?>>
 
             <article class="container course-list">
@@ -60,7 +60,10 @@
                     echo '</div>'
                     ?>
                 <?php else: ?>
-
+                    <article class="container course-list">
+<h2 class="course-title">We're Sorry</h2>
+<p> We couldn't find any courses that fit the criteria you specified</p>
+</article>
                     <?php get_404_template(); ?>
 
             <?php endif; ?>
