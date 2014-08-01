@@ -145,6 +145,7 @@ function relevanssi_qvs($qv) {
 	array_push($qv, 'on-demand');
 	array_push($qv, 'accredited');
 	array_push($qv, 'provided_by');
+	array_push($qv, 'classroom');
 	return $qv;
 
 }
@@ -175,7 +176,26 @@ function filter_courses($hits) {
 	// just make sure that we have some results to work with:
 	if ($hits[0] == null) {
     // no search hits, so return all
-    $args = array( 'post_type' => 'course', 'posts_per_page' => -1 );
+    $args = array( 'post_type' => 'course', 'posts_per_page' => -1);
+
+	if (isset($_GET['orderby']) && $_GET['orderby'] == "title"){
+		$args["orderby"] = "title";
+		$args['order'] = $_GET['order'];
+	}
+
+	if (isset($_GET['orderby']) && $_GET['orderby'] == "meta_value"){
+		$args["orderby"] = "meta_value";
+		$args["meta_key"] = $_GET['meta_key'];
+		$args['order'] = $_GET['order'];
+	}
+
+	if (isset($_GET['orderby']) && $_GET['orderby'] == "meta_value_num"){
+		$args["orderby"] = "meta_value_num";
+		$args["meta_key"] = $_GET['meta_key'];
+		$args['order'] = $_GET['order'];
+	}
+
+
     $hits[0] = get_posts($args);
     }
    // now filter the results
@@ -224,7 +244,7 @@ function filter_courses($hits) {
 
 			// remove those without the specified delivery method
 			if (is_array(get_field('delivery_method',$hit->ID))) {
-            $suspect = false;
+			$suspect = false;
             if (isset($wp_query->query_vars['online']) && !in_array('online', get_field('delivery_method',$hit->ID))){
                 $suspect = true;
             } if (isset($wp_query->query_vars['on-site']) && !in_array('on-site', get_field('delivery_method',$hit->ID))) {
@@ -233,7 +253,9 @@ function filter_courses($hits) {
                 $suspect = true;
             } if (isset($wp_query->query_vars['on-demand']) && !in_array('on-demand',get_field('delivery_method',$hit->ID))) {
                 $suspect = true;
-			      }
+			} if (isset($wp_query->query_vars['classroom']) && !in_array('classroom',get_field('delivery_method',$hit->ID))) {
+				$suspect = true;
+				}
 
             if (isset($wp_query->query_vars['online']) && in_array('online', get_field('delivery_method',$hit->ID))){
                 $suspect = false;
@@ -243,7 +265,10 @@ function filter_courses($hits) {
                 $suspect = false;
             } if (isset($wp_query->query_vars['on-demand']) && in_array('on-demand',get_field('delivery_method',$hit->ID))) {
                 $suspect = false;
-			      }
+			} if (isset($wp_query->query_vars['classroom']) && in_array('classroom',get_field('delivery_method',$hit->ID))) {
+				$suspect = false;
+			}
+
 
 
             // since hit fell through everything, we can assume it's a good variable
