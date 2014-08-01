@@ -1,5 +1,6 @@
- 
+
     <?php
+global $wp_query;
 
     if (!is_single()) {
     //make sure to cleanup the URL, so that we don't unecessarily increase the size of the query string
@@ -15,6 +16,7 @@
     unset($query_string['meta_value']);
     } ?>
 <div class="filters">
+    <p class="pull-left"><?php echo $wp_query->found_posts; ?> Courses found</p>
     <p class="pull-right">Sort By: <a href="?<?php echo http_build_query($query_string)?>&meta_key=start_date&orderby=meta_value_num">Date</a> | <a href="?<?php echo http_build_query($query_string)?>&meta_key=map_location&orderby=meta_value">Location</a> | <a href="?<?php echo http_build_query($query_string) ?>&orderby=title">A-Z</a></p>
 </div>
 <?php } ?>
