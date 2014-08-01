@@ -43,16 +43,22 @@
                             </article>
                             <?php wp_link_pages(); ?>
                             <?php get_template_part('template-part', 'postmeta'); ?>
-                            <?php  if ( comments_open() ) : ?>
-                                   <div class="clear"></div>
-                                  <p class="text-right">
-                                      <a class="btn btn-success" href="<?php the_permalink(); ?>#comments"><?php comments_number(__('Leave a Comment','devdmbootstrap3'), __('One Comment','devdmbootstrap3'), '%' . __(' Comments','devdmbootstrap3') );?> <span class="glyphicon glyphicon-comment"></span></a>
-                                  </p>
-                            <?php endif; ?>
+
                        </div>
 
                 <?php endwhile; ?>
-                <?php posts_nav_link(); ?>
+                <?php
+
+                $big = 9999999;
+                echo "<div class='pagination'>";
+                echo paginate_links(array(
+                    'base' => str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
+                    'format'=>'/page/%#%/',
+                    'current' => max( 1, get_query_var('paged')),
+                    'total' => $wp_query->max_num_pages
+                    ));
+                    echo '</div>'
+                    ?>
                 <?php else: ?>
 
                     <?php get_404_template(); ?>
