@@ -58,11 +58,17 @@
                                }
                                ?></p>
 
-                            <?php if (get_field("accredited")=="Yes") { ?>
-                            <p><i class="fa fa-check"></i> Accredited</p>
-                            <?php } else { ?>
-                            <p><i class="fa fa-ban"></i> Accredited</p>
-                            <?php } ?>
+<?php if (get_field("accredited")=="Yes") { ?>
+<p><i class="fa fa-check"></i> IFMA Accredited</p>
+<?php } else { ?>
+<p><i class="fa fa-ban"></i> IFMA Accredited</p>
+<?php } ?>
+
+<?php if (get_field("college_accredited")=="Yes") { ?>
+<p><i class="fa fa-check"></i> College Accredited</p>
+<?php } else { ?>
+<p><i class="fa fa-ban"></i> College Accredited</p>
+<?php } ?>
 
 
                             <p><i class="fa fa-globe"></i> <a href="<?php echo get_field("website_url"); ?>">Website</a></p>
@@ -76,7 +82,9 @@
                                     if ($instructor) {
                                         $name = get_field('first_name',$instructor[0])." ".get_field('last_name',$instructor[0]);?>
                                     <p>Instructor: <?php echo $name; ?></p>
-                                    <?php } ?>
+                                    }
+
+                                ?>
                                 <p>CEU Level: <?php echo get_field("level"); ?></p>
 
 
