@@ -3,7 +3,7 @@
 
 <!-- footer logo -->
 <div class="col-md-4 footer-column">
-<a href="<?php echo site_url(); ?>">
+<a href="<?php echo "http://www.ifma.org"; ?>">
 <?php if (get_option('footer_image_setting')) { ?>
 <img src="<?php echo get_option('footer_image_setting'); ?>" alt="IFMA Logo" />
 <?php } else { ?>
