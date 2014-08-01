@@ -12,5 +12,21 @@ $IFMA-DarkBlue: #35647D;	//Pantone 7699
 $IFMA-DarkGreen: #368F3F;	//Pantone 7740
 
 //IFMA Typography
-$primary-typeface: Klavica,sans-serif;
-$secondary-typeface: Helvetica,trebuchet,arial,sans-serif;
+
+@font-face {
+  font-family: 'Klavika';
+  src: url('fonts/KlavikaWebBasic/KlavikaWebBasic_EOT/KlavikaWebBasicRegular.eot'); /* IE9 Compat Modes */
+  src: url('fonts/KlavikaWebBasic/KlavikaWebBasic_EOT/KlavikaWebBasicRegular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('fonts/KlavikaWebBasic/KlavikaWebBasic_WOFF/KlavikaWebBasicRegular.woff') format('woff'); /* Modern Browsers */
+}
+
+@font-face {
+  font-family: 'Helvetica';
+  src: url('fonts/Helvetica/fontscore.com_h_helvetica-neue-lt-std-55-roman.eot'); /* IE9 Compat Modes */
+  src: url('fonts/Helvetica/fontscore.com_h_helvetica-neue-lt-std-55-roman.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('fonts/Helvetica/fontscore.com_h_helvetica-neue-lt-std-55-roman.woff') format('woff'), /* Modern Browsers */
+       url('fonts/Helvetica/fontscore.com_h_helvetica-neue-lt-std-55-roman.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('fonts/Helvetica/fontscore.com_h_helvetica-neue-lt-std-55-roman.svg') format('svg'); /* Legacy iOS */
+}
+$primary-typeface: "Klavika",arial,sans-serif;
+$secondary-typeface: "Helvetica",trebuchet,arial,sans-serif;

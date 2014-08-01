@@ -32,7 +32,6 @@
 			a{
 				color: #fff;
 				display:block;
-				font-weight:bold;
 				padding:11px 20px;
 				text-decoration:none;
 				&:hover{
@@ -76,4 +75,8 @@
 
 .search-return{
 	margin-top:1em;
+}
+
+.pagination{
+	float:right;
 }
