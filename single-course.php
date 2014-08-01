@@ -36,7 +36,7 @@
                               //map stuff
                               $location = get_field('map_location');
                               if ($location) {
-                                $place = get_field('map_location', $location[0]);
+                                $place = get_field('map_location', $location[0]->ID);
                                 echo "<p> Address: {$place['address']} </p>";
                                 echo "<img src='http://maps.googleapis.com/maps/api/staticmap?markers=".$place['lat'].",".$place['lng']."&zoom=13&size=375x375&sensor=false' alt='map location'>";
                               }
@@ -65,7 +65,7 @@
                             <?php } ?>
 
 
-                            <p><i class="fa fa-globe"></i> <a href="<?php get_field("website_url"); ?>">Website</a></p>
+                            <p><i class="fa fa-globe"></i> <a href="<?php echo get_field("website_url"); ?>">Website</a></p>
                                        </div>
 
                             <div class="col-lg-8 course-info">
@@ -74,10 +74,9 @@
                                 <p>Provided By: <?php echo get_field("provided_by"); ?></p>
                                 <?php $instructor = get_field('instructor');
                                     if ($instructor) {
-                                        $name = get_field('first_name',$instructor[0])." ".get_field('last_name',$instructor[0]);
-                                    }
-                                ?>
-                                <p>Instructor: <?php echo $name; ?></p>
+                                        $name = get_field('first_name',$instructor[0])." ".get_field('last_name',$instructor[0]);?>
+                                    <p>Instructor: <?php echo $name; ?></p>
+                                    <?php } ?>
                                 <p>CEU Level: <?php echo get_field("level"); ?></p>
 
 
@@ -87,7 +86,13 @@
 
                             <h3>Course Description/Syllabus</h3>
 
-                            <?php the_content(); ?></div>
+                            <?php the_content();
+                            if(get_field("registration_url") != ""){
+                                ?>
+                            <a class="btn pull-right" href="<?php echo get_field('registration_url'); ?>">Register Now</a>
+                        <?php }?>
+                            </div>
+
 
                             <?php wp_link_pages(); ?>
                             <?php get_template_part('template-part', 'postmeta'); ?>
