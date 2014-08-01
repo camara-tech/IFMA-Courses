@@ -5,6 +5,7 @@ function include_font_awesome() {
 	wp_enqueue_style('font-awesome.css');
 }
 add_action('wp_enqueue_scripts','include_font_awesome');
+
 # let's include the local javascript file
 function include_indexjs() {
 	wp_register_script('indexjs',get_stylesheet_directory_uri().'/js/index.min.js', array('jquery'), false, true);
@@ -12,6 +13,7 @@ function include_indexjs() {
 	wp_enqueue_script('indexjs');
 }
 add_action('wp_enqueue_scripts','include_indexjs');
+
 # let's make sure to include bootstrap itself.
 function include_bootstrap() {
   wp_register_script('bootstrapjs',get_stylesheet_directory_uri().'/js/bootstrap.min.js', array('jquery'),false,true);
@@ -147,7 +149,6 @@ function relevanssi_qvs($qv) {
 
 }
 
-
 #second, make sure that relevanssi fires if a filter is present but the search term is empty
 #
 #currently only tests if ifma_credential or start_date is present
@@ -156,6 +157,7 @@ add_filter('relevanssi_search_ok', 'search_trigger');
 
 function search_trigger($search_ok){
 	global $wp_query;
+
 	if (!empty($wp_query->query_vars['ifma_credential']) || !empty($wp_query->query_vars['start_date'])){
 		$search_ok = true;
 	}
@@ -173,23 +175,30 @@ function filter_courses($hits) {
 	// just make sure that we have some results to work with:
 	if ($hits[0] == null) {
     // no search hits, so return all
-    $args = array( 'post_type' => 'course' );
+    $args = array( 'post_type' => 'course', 'posts_per_page' => -1 );
     $hits[0] = get_posts($args);
     }
    // now filter the results
    	$results = array();
 		foreach ($hits[0] as $hit) {
 			//start filtering by start date and if no date is specified use current date.
+
 			if (isset($wp_query->query_vars['start_date']) && get_field('start_date',$hit->ID) != null) {
                 $start_date = implode(" ",$wp_query->query_vars['start_date']);
+
+
+
+
 				if (date(Ymd,strtotime($start_date)) > date(Ymd,strtotime(strval(get_field('start_date',$hit->ID))))) {
 					continue;
-                } 
+                }
 			} elseif (isset($wp_query->query_vars['start_date']) != true && get_field('start_date',$hit->ID) != null){
 				if (date(Ymd,strtoTime('now')) > date(Ymd,strtotime(strval(get_field('start_date',$hit->ID))))) {
 					continue;
 				}
 			}
+
+			//var_dump(get_fields($hit));
 			//check that the result matches the correct credential
 			if (isset($wp_query->query_vars['ifma_credential'])) {
 				if ($wp_query->query_vars['ifma_credential']==='fmp' && !in_category('fmp',$hit)) {
@@ -212,7 +221,9 @@ function filter_courses($hits) {
 			if (isset($wp_query->query_vars['provided_by']) && $wp_query->query_vars['provided_by'] != the_field('provided_by',$hit->ID)) {
 				continue;
 			}
+
 			// remove those without the specified delivery method
+			if (is_array(get_field('delivery_method',$hit->ID))) {
             $suspect = false;
             if (isset($wp_query->query_vars['online']) && !in_array('online', get_field('delivery_method',$hit->ID))){
                 $suspect = true;
@@ -222,7 +233,7 @@ function filter_courses($hits) {
                 $suspect = true;
             } if (isset($wp_query->query_vars['on-demand']) && !in_array('on-demand',get_field('delivery_method',$hit->ID))) {
                 $suspect = true;
-			}
+			      }
 
             if (isset($wp_query->query_vars['online']) && in_array('online', get_field('delivery_method',$hit->ID))){
                 $suspect = false;
@@ -232,13 +243,17 @@ function filter_courses($hits) {
                 $suspect = false;
             } if (isset($wp_query->query_vars['on-demand']) && in_array('on-demand',get_field('delivery_method',$hit->ID))) {
                 $suspect = false;
-			}
-            
+			      }
+
 
             // since hit fell through everything, we can assume it's a good variable
             if ($suspect == false){
             $results[]= $hit;
             }
+					} else{
+						//doesn't have a specified delivery method, go ahead and return it.
+						$results[]= $hit;
+					}
 		}
         $hits[0] = $results;
 	return $hits;
