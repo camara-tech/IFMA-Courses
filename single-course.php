@@ -65,7 +65,7 @@
                             <?php } ?>
 
 
-                            <p><i class="fa fa-globe"></i> <a href="<?php get_field("website"); ?>">Website</a></p>
+                            <p><i class="fa fa-globe"></i> <a href="<?php get_field("website_url"); ?>">Website</a></p>
                                        </div>
 
                             <div class="col-lg-8 course-info">
