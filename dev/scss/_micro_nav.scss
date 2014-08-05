@@ -2,12 +2,17 @@
 	background-color: #6D6e71;
 	border-bottom: 5px solid #414042;
 	height:auto;
-	min-height:24px;
+	min-height:26px;
+	padding-top:1px;
 	width:100%;
 	display:none;
 	@media (min-width:900px) {
 		display:block;
 	}
+.container{
+	width: 970px;
+}
+
 	ul {
 		list-style:none outside none;
 		margin:0;
