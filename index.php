@@ -45,6 +45,10 @@
                             </div>
                             <?php the_excerpt(); ?>
 
+                                <?php if (get_field("registration_url") != ""){ ?>
+                                <a class="btn btn-action pull-right" href="<?php echo get_field('registration_url'); ?>">Register Now</a>
+                                <?php } ?>
+
                             <a href="<?php echo get_permalink(); ?>" class="btn btn-default pull-right"> Read More...</a>
                             </article>
                             <?php wp_link_pages(); ?>
