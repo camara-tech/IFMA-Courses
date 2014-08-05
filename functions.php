@@ -5,6 +5,7 @@ function include_font_awesome() {
 	wp_enqueue_style('font-awesome.css');
 }
 add_action('wp_enqueue_scripts','include_font_awesome');
+
 # let's include the local javascript file
 function include_indexjs() {
 	wp_register_script('indexjs',get_stylesheet_directory_uri().'/js/index.min.js', array('jquery'), false, true);
@@ -12,6 +13,7 @@ function include_indexjs() {
 	wp_enqueue_script('indexjs');
 }
 add_action('wp_enqueue_scripts','include_indexjs');
+
 # let's make sure to include bootstrap itself.
 function include_bootstrap() {
   wp_register_script('bootstrapjs',get_stylesheet_directory_uri().'/js/bootstrap.min.js', array('jquery'),false,true);
@@ -31,7 +33,7 @@ add_theme_support('custom-header', $args);
 #let's get the footer image working
 function IFMA_customize_register( $wp_customize) {
   #add a new setting
-  $wp_customize->add_setting('footer_image_setting',array('default' => get_template_directory_uri() . '/images/footer.png'));
+  $wp_customize->add_setting('footer_image_setting',array('default' => get_template_directory_uri() . '/images/footer.png', 'type'=> 'option'));
   #add a new section
   $wp_customize->add_section('footer_image_section',array('title' => __('Footer Image','IFMA-Courses')));
   #add a control so we can change stuff
@@ -58,11 +60,22 @@ function IFMA_homepage_title($title) {
 
 function register_menus() {
   register_nav_menus(array(
-    'micro-nav-menu' => __('Micro Nav'),
     'utility-menu' => __('Utility'),
     'navigation-menu' => __('Navigation') ) );
 }
 add_action('init', 'register_menus');
+
+function micro_nav_widget_init() {
+  register_sidebar(array(
+    'name' => 'MicroNav',
+    'id' => 'micro_nav',
+    'before_widget' => '<ul>',
+    'after_widget' => '</ul>',
+    'before_title' => '<li>',
+    'after_title' => '</li>',
+  ) );
+}
+add_action('widgets_init', 'micro_nav_widget_init');
 
 # let's register widget areas
 function footer_widget_init() {
@@ -139,14 +152,16 @@ function relevanssi_qvs($qv) {
 	array_push($qv, 'ifma_credential');
 	array_push($qv, 'online');
 	array_push($qv, 'on-site');
-	array_push($qv, 'scheduled');
-	array_push($qv, 'on-demand');
+	array_push($qv, 'online-scheduled');
+	array_push($qv, 'self-study');
 	array_push($qv, 'accredited');
+	array_push($qv, 'classroom');
 	array_push($qv, 'provided_by');
+	array_push($qv, 'college_accredited');
+	array_push($qv, 'ceu');
 	return $qv;
 
 }
-
 
 #second, make sure that relevanssi fires if a filter is present but the search term is empty
 #
@@ -156,6 +171,7 @@ add_filter('relevanssi_search_ok', 'search_trigger');
 
 function search_trigger($search_ok){
 	global $wp_query;
+
 	if (!empty($wp_query->query_vars['ifma_credential']) || !empty($wp_query->query_vars['start_date'])){
 		$search_ok = true;
 	}
@@ -173,23 +189,46 @@ function filter_courses($hits) {
 	// just make sure that we have some results to work with:
 	if ($hits[0] == null) {
     // no search hits, so return all
-    $args = array( 'post_type' => 'course' );
+    $args = array( 'post_type' => 'course', 'posts_per_page' => -1);
+
+	if (isset($_GET['orderby']) && $_GET['orderby'] == "title"){
+		$args["orderby"] = "title";
+		$args['order'] = $_GET['order'];
+	}
+
+	if (isset($_GET['orderby']) && $_GET['orderby'] == "meta_value"){
+		$args["orderby"] = "meta_value";
+		$args["meta_key"] = $_GET['meta_key'];
+		$args['order'] = $_GET['order'];
+	}
+
+	if (isset($_GET['orderby']) && $_GET['orderby'] == "meta_value_num"){
+		$args["orderby"] = "meta_value_num";
+		$args["meta_key"] = $_GET['meta_key'];
+		$args['order'] = $_GET['order'];
+	}
+
+
     $hits[0] = get_posts($args);
     }
    // now filter the results
    	$results = array();
 		foreach ($hits[0] as $hit) {
 			//start filtering by start date and if no date is specified use current date.
+
 			if (isset($wp_query->query_vars['start_date']) && get_field('start_date',$hit->ID) != null) {
                 $start_date = implode(" ",$wp_query->query_vars['start_date']);
+
 				if (date(Ymd,strtotime($start_date)) > date(Ymd,strtotime(strval(get_field('start_date',$hit->ID))))) {
 					continue;
-                } 
+                }
 			} elseif (isset($wp_query->query_vars['start_date']) != true && get_field('start_date',$hit->ID) != null){
 				if (date(Ymd,strtoTime('now')) > date(Ymd,strtotime(strval(get_field('start_date',$hit->ID))))) {
 					continue;
 				}
 			}
+
+			//var_dump(get_fields($hit));
 			//check that the result matches the correct credential
 			if (isset($wp_query->query_vars['ifma_credential'])) {
 				if ($wp_query->query_vars['ifma_credential']==='fmp' && !in_category('fmp',$hit)) {
@@ -203,42 +242,58 @@ function filter_courses($hits) {
 				}
 			}
 
-
-			// check accreditation
+			// check IFMA accreditation
 			if (isset($wp_query->query_vars['accredited']) && !get_field('accredited',$hit->ID)) {
 				continue;
 			}
-			// provided by
-			if (isset($wp_query->query_vars['provided_by']) && $wp_query->query_vars['provided_by'] != the_field('provided_by',$hit->ID)) {
+
+			// check College accreditation
+			if (isset($wp_query->query_vars['college_accredited']) && !get_field('college_accredited',$hit->ID)) {
 				continue;
 			}
+
+			// check CEU
+			if (isset($wp_query->query_vars['ceu']) && !get_field('ceu',$hit->ID)) {
+				continue;
+			}
+
 			// remove those without the specified delivery method
-            $suspect = false;
+			if (is_array(get_field('delivery_method',$hit->ID))) {
+			$suspect = false;
             if (isset($wp_query->query_vars['online']) && !in_array('online', get_field('delivery_method',$hit->ID))){
                 $suspect = true;
             } if (isset($wp_query->query_vars['on-site']) && !in_array('on-site', get_field('delivery_method',$hit->ID))) {
                 $suspect = true;
-            } if (isset($wp_query->query_vars['scheduled']) && !in_array('scheduled',get_field('delivery_method',$hit->ID))) {
+            } if (isset($wp_query->query_vars['online-scheduled']) && !in_array('online-scheduled',get_field('delivery_method',$hit->ID))) {
                 $suspect = true;
-            } if (isset($wp_query->query_vars['on-demand']) && !in_array('on-demand',get_field('delivery_method',$hit->ID))) {
+            } if (isset($wp_query->query_vars['self-study']) && !in_array('self-study',get_field('delivery_method',$hit->ID))) {
                 $suspect = true;
+			} if (isset($wp_query->query_vars['classroom']) && !in_array('classroom',get_field('delivery_method',$hit->ID))) {
+				$suspect = true;
 			}
 
             if (isset($wp_query->query_vars['online']) && in_array('online', get_field('delivery_method',$hit->ID))){
                 $suspect = false;
             } if (isset($wp_query->query_vars['on-site']) && in_array('on-site', get_field('delivery_method',$hit->ID))) {
                 $suspect = false;
-            } if (isset($wp_query->query_vars['scheduled']) && in_array('scheduled',get_field('delivery_method',$hit->ID))) {
+            } if (isset($wp_query->query_vars['online-scheduled']) && in_array('online-scheduled',get_field('delivery_method',$hit->ID))) {
                 $suspect = false;
-            } if (isset($wp_query->query_vars['on-demand']) && in_array('on-demand',get_field('delivery_method',$hit->ID))) {
+            } if (isset($wp_query->query_vars['self-study']) && in_array('self-study',get_field('delivery_method',$hit->ID))) {
                 $suspect = false;
+			} if (isset($wp_query->query_vars['classroom']) && in_array('classroom',get_field('delivery_method',$hit->ID))) {
+				$suspect = false;
 			}
-            
+
+
 
             // since hit fell through everything, we can assume it's a good variable
             if ($suspect == false){
             $results[]= $hit;
             }
+					} else{
+						//doesn't have a specified delivery method, go ahead and return it.
+						$results[]= $hit;
+					}
 		}
         $hits[0] = $results;
 	return $hits;

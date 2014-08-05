@@ -1,6 +1,5 @@
 .searchform{
     float:left;
-    border-radius: 0.5em;
     border: 1px #bbb solid;
     box-shadow: 2px 3px 8px #ddd;
     margin-top:2em;
@@ -13,8 +12,8 @@
     }
     input, select {
         height: 2.7em;
-        padding:0.5em 1em;
-        border: 1px solid #ddd;
+        padding: 0.5em 1em;
+        border: 1px solid $IFMA-Grey*1.4;
         width: 100%;
         vertical-align:center;
         margin-bottom:2em;
@@ -30,7 +29,7 @@
     #s {
         height: 2.7em;
         padding:0.5em 1em;
-        border:1px solid #ddd;
+        border:1px solid $IFMA-Grey*1.4;
         width:80%;
         vertical-align:center;
         margin-bottom: 2em;
@@ -51,20 +50,18 @@
     h3{
         text-align:center;
     }
-    
+
 }
 
 #s{
-    -webkit-border-radius:0.5em;
-    -moz-border-radius:0.5em;
-    border-radius: 0.5em;
     padding-left:1em;
     padding-right:1em;
 }
 
 #searchsubmit{
     display: inline-block;
-    margin-bottom:1px;
+    margin-bottom:0.2em;
+    text-shadow: 0 0 0 grey;
 }
 
 .facet-true_false {
@@ -112,13 +109,25 @@
 }
 
 .filter{
-    border:solid;
     margin:1%;
-    width:11em;
+    width:16em;
     height: 11em;
     background-color: white;
+    border: solid 1px $IFMA-Grey*1.4;
+    color:#333;
+    white-space:normal;
+
     background-image:none;
     img{
-        width:7em;
+        width:6em;
+    }
+    &:hover{
+        background-color:white;
+        color:#333;
+        box-shadow: 0px 5px 8px -3px $IFMA-Grey*0.5;
+    }
+    h3{
+        margin:0;
+        padding:0;
     }
 }

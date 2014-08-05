@@ -5,8 +5,8 @@
       <div class="main-content col-lg-8 col-md-8 col-sm-8">
       <?php get_template_part('templates/template','sort'); ?>
       <?php // theloop
-      if ( have_posts() ) : while ( have_posts() ) : the_post();
-        ?>
+      if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
+
         <div <?php post_class(); ?>>
 
             <article class="container course-list">
@@ -29,32 +29,51 @@
 
 
                             <?php if (get_field("accredited")=="Yes") { ?>
-                            <p><i class="fa fa-check"></i> Accredited</p>
+                            <p><i class="fa fa-check"></i> IFMA Accredited</p>
                             <?php } else { ?>
-                            <p><i class="fa fa-ban"></i> Accredited</p>
+                            <p><i class="fa fa-ban"></i> IFMA Accredited</p>
+                            <?php } ?>
+
+                            <?php if (get_field("college_accredited")=="Yes") { ?>
+                            <p><i class="fa fa-check"></i> College Accredited</p>
+                            <?php } else { ?>
+                            <p><i class="fa fa-ban"></i> College Accredited</p>
                             <?php } ?>
 
 
-                            <p><i class="fa fa-globe"></i> <a href="<?php get_field("website"); ?>">Website</a></p>
+                            <p><i class="fa fa-globe"></i> <a href="<?php echo get_field("website_url"); ?>">Website</a></p>
                             </div>
                             <?php the_excerpt(); ?>
+
+                                <?php if (get_field("registration_url") != ""){ ?>
+                                <a class="btn btn-action pull-right" href="<?php echo get_field('registration_url'); ?>">Register Now</a>
+                                <?php } ?>
 
                             <a href="<?php echo get_permalink(); ?>" class="btn btn-default pull-right"> Read More...</a>
                             </article>
                             <?php wp_link_pages(); ?>
                             <?php get_template_part('template-part', 'postmeta'); ?>
-                            <?php  if ( comments_open() ) : ?>
-                                   <div class="clear"></div>
-                                  <p class="text-right">
-                                      <a class="btn btn-success" href="<?php the_permalink(); ?>#comments"><?php comments_number(__('Leave a Comment','devdmbootstrap3'), __('One Comment','devdmbootstrap3'), '%' . __(' Comments','devdmbootstrap3') );?> <span class="glyphicon glyphicon-comment"></span></a>
-                                  </p>
-                            <?php endif; ?>
+
                        </div>
 
                 <?php endwhile; ?>
-                <?php posts_nav_link(); ?>
-                <?php else: ?>
+                <?php
 
+                $big = 9999999;
+                echo "<div class='pagination'>";
+                echo paginate_links(array(
+                    'base' => str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
+                    'format'=>'/page/%#%/',
+                    'current' => max( 1, get_query_var('paged')),
+                    'total' => $wp_query->max_num_pages
+                    ));
+                    echo '</div>'
+                    ?>
+                <?php else: ?>
+                    <article class="container course-list">
+<h2 class="course-title">We're Sorry</h2>
+<p> We couldn't find any courses that fit the criteria you specified</p>
+</article>
                     <?php get_404_template(); ?>
 
             <?php endif; ?>

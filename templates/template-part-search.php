@@ -3,9 +3,15 @@
 
 
 <div class="search-term">
-    <h2> Search Courses</h2> 
+    <h2> Search Courses</h2>
     <label class="screen-reader-text" for="s">By Keyword(s)</label>
-    <input type="text" name="s" id="s" />
+    <?php
+    if (isset($_GET['s'])){ ?>
+        <input type="text" name="s" id="s" value="<?php echo $_GET['s']; ?>">
+    <?php } else { ?>
+        <input type="text" name="s" id="s" />
+    <?php } ?>
+
 </div>
 
 <div class="facets">
@@ -44,12 +50,12 @@ foreach ($fields as $field){
   if ($field['type'] === 'checkbox') {
       echo "<div class='facet-checkbox'>";
       foreach($field['choices'] as $choice_value=>$choice_label) {
-          if (isset($_GET['delivery_method']) && $_GET['delivery_method'] === $choice_value) {
+          if (isset($_GET[$choice_value]) && $_GET[$choice_value] === "on") {
           echo "<input type='checkbox' name='{$choice_value}' id='{$choice_value}' checked='true' />";
           } else {
           echo "<input type='checkbox' name='{$choice_value}' id='{$choice_value}' />";
           }
-          echo "<label for='{$choice_value}'>$choice_label</label>"; 
+          echo "<label for='{$choice_value}'>$choice_label</label>";
       }
       echo "</div>";
   }
@@ -62,30 +68,92 @@ foreach ($fields as $field){
       echo "<label for='{$field['name']}'>Month</label>";
       echo "<select name='{$field['name']}[month]'>";
 
-?> 
-        <option>January</option>
-`       <option>February</option>
-        <option>March</option>
-        <option>April</option>
-        <option>May</option>
-        <option>June</option>
-        <option>July</option>
-        <option>August</option>
-        <option>September</option>
-        <option>October</option>
-        <option>November</option>
-        <option>December</option>
-<?php 
+            if(isset($_GET[$field['name']]) && $_GET[$field['name']]['month'] === "January"){?>
+            <option selected>January</option>
+        <?php } else{ ?>
+            <option>January</option>
+        <?php } ?>
+        <?php if(isset($_GET[$field['name']]) && $_GET[$field['name']]['month'] === "February"){?>
+            <option selected>February</option>
+        <?php } else{ ?>
+            <option>February</option>
+        <?php } ?>
+        <?php if(isset($_GET[$field['name']]) && $_GET[$field['name']]['month'] === "March"){?>
+            <option selected>March</option>
+        <?php } else{ ?>
+            <option>March</option>
+        <?php } ?>
+        <?php if(isset($_GET[$field['name']]) && $_GET[$field['name']]['month'] === "April"){?>
+            <option selected>April</option>
+        <?php } else{ ?>
+            <option>April</option>
+        <?php } ?>
+        <?php if(isset($_GET[$field['name']]) && $_GET[$field['name']]['month'] === "May"){?>
+            <option selected>May</option>
+        <?php } else{ ?>
+            <option>May</option>
+        <?php } ?>
+        <?php if(isset($_GET[$field['name']]) && $_GET[$field['name']]['month'] === "June"){?>
+            <option selected>June</option>
+        <?php } else{ ?>
+            <option>June</option>
+        <?php } ?>
+        <?php if(isset($_GET[$field['name']]) && $_GET[$field['name']]['month'] === "July"){?>
+            <option selected>July</option>
+        <?php } else{ ?>
+            <option>July</option>
+        <?php } ?>
+        <?php if(isset($_GET[$field['name']]) && $_GET[$field['name']]['month'] === "August"){?>
+            <option selected>August</option>
+        <?php } else{ ?>
+            <option>August</option>
+        <?php } ?>
+        <?php if(isset($_GET[$field['name']]) && $_GET[$field['name']]['month'] === "September"){?>
+            <option selected>September</option>
+        <?php } else{ ?>
+            <option>September</option>
+        <?php } ?>
+        <?php if(isset($_GET[$field['name']]) && $_GET[$field['name']]['month'] === "October"){?>
+            <option selected>October</option>
+        <?php } else{ ?>
+            <option>October</option>
+        <?php } ?>
+        <?php if(isset($_GET[$field['name']]) && $_GET[$field['name']]['month'] === "November"){?>
+            <option selected>November</option>
+        <?php } else{ ?>
+            <option>November</option>
+        <?php } ?>
+        <?php if(isset($_GET[$field['name']]) && $_GET[$field['name']]['month'] === "December"){?>
+            <option selected>December</option>
+        <?php } else{ ?>
+            <option>December</option>
+        <?php }
+
       echo "</select>";
       echo "<label for='{$field['name']}'>Year</label>";
       echo "<select name='{$field['name']}[year]'>";
 ?>
-    <option>2014</option>
-    <option>2015</option>
-    <option>2016</option>
-    <option>2017</option>
-    
-<?php
+    <?php if(isset($_GET[$field['name']]) && $_GET[$field['name']]['year'] === "2014"){?>
+        <option selected>2014</option>
+    <?php } else{ ?>
+        <option>2014</option>
+    <?php }
+     if(isset($_GET[$field['name']]) && $_GET[$field['name']]['year'] === "2015"){?>
+        <option selected>2015</option>
+    <?php } else{ ?>
+        <option>2015</option>
+    <?php }
+    if(isset($_GET[$field['name']]) && $_GET[$field['name']]['year'] === "2016"){?>
+        <option selected>2016</option>
+    <?php } else{ ?>
+        <option>2016</option>
+    <?php }
+     if(isset($_GET[$field['name']]) && $_GET[$field['name']]['year'] === "2017"){?>
+        <option selected>2017</option>
+    <?php } else{ ?>
+        <option>2017</option>
+    <?php }
+
       echo "</select>";
       echo "</div>";
   }

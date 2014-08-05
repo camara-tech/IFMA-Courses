@@ -1,5 +1,6 @@
 @import 'bits';
 @import 'normalize';
+@import 'components';
 @import 'micro_nav';
 @import 'header';
 @import 'footer';
@@ -18,9 +19,6 @@
 	box-shadow: 2px 3px 8px #ddd;
 	padding: 10px 20px;
 	margin-bottom: 20px;
-	-webkit-border-radius: 0.5em;
-	-moz-border-radius: 0.5emx;
-	border-radius: 0.5em;
 	width: 100%;
 	margin-right: auto;
 	margin-right: auto;
@@ -36,6 +34,10 @@
 .course-details p {
 	display: inline-block;
 	padding-right: 10px;
+}
+
+.course-content {
+	margin-bottom: 1.5em;
 }
 
 /* rules for the single-course page */

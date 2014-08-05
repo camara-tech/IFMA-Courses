@@ -7,10 +7,10 @@ get_header(); ?>
     <input type="text" name="s" id="s" placeholder="What would you like to learn today?"/>
     <input type="submit" id="searchsubmit" value="Go" class="btn btn-default" />
     <div class="initial-facets">
-        <button name="ifma_credential" value="fmp" type="submit" class="filter btn btn-default"><img src="<?php echo get_template_directory_uri() . '/images/fmp-logo_color_med836DBD92634D.jpg'; ?>" alt="View all FMP Courses" class="center-block img-rounded"></button>
-        <button name="ifma_credential" value="sfp" type="submit" class="filter btn btn-default"><img src="<?php echo get_template_directory_uri() . '/images/sfp-logo_color_medF85909A67844.jpg'; ?>" alt="View all SFP Courses" class="center-block img-rounded"></button>
-        <button name="ifma_credential" value="cfm" type="submit" class="filter btn btn-default"><img src="<?php echo get_template_directory_uri() . '/images/cfm-logo_color_med182CC468D797.jpg'; ?>" alt="View all CFM Courses" class="center-block img-rounded"></button>
-        <button name="ifma_credential" value="all" type="submit" class="filter btn btn-default"><img src="<?php echo get_template_directory_uri() . '/images/new_ifma_creds_compass_3in.png'; ?>" alt="View all courses" class="center-block img-rounded"></button>
+        <button name="ifma_credential" value="fmp" type="submit" class="filter btn btn-default"><img src="<?php echo get_template_directory_uri() . '/images/fmp-logo_color_med836DBD92634D.jpg'; ?>" alt="View all FMP Courses"><h3>View All FMP Courses</h3></button>
+        <button name="ifma_credential" value="sfp" type="submit" class="filter btn btn-default"><img src="<?php echo get_template_directory_uri() . '/images/sfp-logo_color_medF85909A67844.jpg'; ?>" alt="View all SFP Courses"><h3>View All SFP Courses</h3></button>
+        <button name="ifma_credential" value="cfm" type="submit" class="filter btn btn-default"><img src="<?php echo get_template_directory_uri() . '/images/cfm-logo_color_med182CC468D797.jpg'; ?>" alt="View all CFM Courses"><h3>View All CFM Courses</h3></button>
+        <button name="ifma_credential" value="all" type="submit" class="filter btn btn-default"><h3>View All Courses</h3></button>
     </div>
 </form>
 <?php } else { ?>
