@@ -60,11 +60,22 @@ function IFMA_homepage_title($title) {
 
 function register_menus() {
   register_nav_menus(array(
-    'micro-nav-menu' => __('Micro Nav'),
     'utility-menu' => __('Utility'),
     'navigation-menu' => __('Navigation') ) );
 }
 add_action('init', 'register_menus');
+
+function micro_nav_widget_init() {
+  register_sidebar(array(
+    'name' => 'MicroNav',
+    'id' => 'micro_nav',
+    'before_widget' => '<ul>',
+    'after_widget' => '</ul>',
+    'before_title' => '<li>',
+    'after_title' => '</li>',
+  ) );
+}
+add_action('widgets_init', 'micro_nav_widget_init');
 
 # let's register widget areas
 function footer_widget_init() {
@@ -141,11 +152,13 @@ function relevanssi_qvs($qv) {
 	array_push($qv, 'ifma_credential');
 	array_push($qv, 'online');
 	array_push($qv, 'on-site');
-	array_push($qv, 'scheduled');
-	array_push($qv, 'on-demand');
+	array_push($qv, 'online-scheduled');
+	array_push($qv, 'self-study');
 	array_push($qv, 'accredited');
-	array_push($qv, 'provided_by');
 	array_push($qv, 'classroom');
+	array_push($qv, 'provided_by');
+	array_push($qv, 'college_accredited');
+	array_push($qv, 'ceu');
 	return $qv;
 
 }
@@ -206,9 +219,6 @@ function filter_courses($hits) {
 			if (isset($wp_query->query_vars['start_date']) && get_field('start_date',$hit->ID) != null) {
                 $start_date = implode(" ",$wp_query->query_vars['start_date']);
 
-
-
-
 				if (date(Ymd,strtotime($start_date)) > date(Ymd,strtotime(strval(get_field('start_date',$hit->ID))))) {
 					continue;
                 }
@@ -232,13 +242,18 @@ function filter_courses($hits) {
 				}
 			}
 
-
-			// check accreditation
+			// check IFMA accreditation
 			if (isset($wp_query->query_vars['accredited']) && !get_field('accredited',$hit->ID)) {
 				continue;
 			}
-			// provided by
-			if (isset($wp_query->query_vars['provided_by']) && $wp_query->query_vars['provided_by'] != the_field('provided_by',$hit->ID)) {
+
+			// check College accreditation
+			if (isset($wp_query->query_vars['college_accredited']) && !get_field('college_accredited',$hit->ID)) {
+				continue;
+			}
+
+			// check CEU
+			if (isset($wp_query->query_vars['ceu']) && !get_field('ceu',$hit->ID)) {
 				continue;
 			}
 
@@ -249,21 +264,21 @@ function filter_courses($hits) {
                 $suspect = true;
             } if (isset($wp_query->query_vars['on-site']) && !in_array('on-site', get_field('delivery_method',$hit->ID))) {
                 $suspect = true;
-            } if (isset($wp_query->query_vars['scheduled']) && !in_array('scheduled',get_field('delivery_method',$hit->ID))) {
+            } if (isset($wp_query->query_vars['online-scheduled']) && !in_array('online-scheduled',get_field('delivery_method',$hit->ID))) {
                 $suspect = true;
-            } if (isset($wp_query->query_vars['on-demand']) && !in_array('on-demand',get_field('delivery_method',$hit->ID))) {
+            } if (isset($wp_query->query_vars['self-study']) && !in_array('self-study',get_field('delivery_method',$hit->ID))) {
                 $suspect = true;
 			} if (isset($wp_query->query_vars['classroom']) && !in_array('classroom',get_field('delivery_method',$hit->ID))) {
 				$suspect = true;
-				}
+			}
 
             if (isset($wp_query->query_vars['online']) && in_array('online', get_field('delivery_method',$hit->ID))){
                 $suspect = false;
             } if (isset($wp_query->query_vars['on-site']) && in_array('on-site', get_field('delivery_method',$hit->ID))) {
                 $suspect = false;
-            } if (isset($wp_query->query_vars['scheduled']) && in_array('scheduled',get_field('delivery_method',$hit->ID))) {
+            } if (isset($wp_query->query_vars['online-scheduled']) && in_array('online-scheduled',get_field('delivery_method',$hit->ID))) {
                 $suspect = false;
-            } if (isset($wp_query->query_vars['on-demand']) && in_array('on-demand',get_field('delivery_method',$hit->ID))) {
+            } if (isset($wp_query->query_vars['self-study']) && in_array('self-study',get_field('delivery_method',$hit->ID))) {
                 $suspect = false;
 			} if (isset($wp_query->query_vars['classroom']) && in_array('classroom',get_field('delivery_method',$hit->ID))) {
 				$suspect = false;
