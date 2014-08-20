@@ -46,7 +46,7 @@ function IFMA_customize_register( $wp_customize) {
 }
 add_action('customize_register','IFMA_customize_register');
 
-# let's get the title tage working
+# let's get the title tags working
 
 add_filter('wp_title','IFMA_homepage_title');
 function IFMA_homepage_title($title) {
@@ -134,7 +134,6 @@ function modify_admin_bar(){
 
 
 # a helper function
-
 function walk_delivery_method($value,$key) {
                 if ($key == 0) {
                     echo $value;
@@ -142,6 +141,22 @@ function walk_delivery_method($value,$key) {
                     echo ", ".$value;
                 }
 }
+
+// this function comes from http://www.codecodex.com/wiki/Calculate_Distance_Between_Two_Points_on_a_Globe#PHP
+function getDistance($latitude1, $longitude1, $latitude2, $longitude2) {
+    $earth_radius = 6371;
+
+    $dLat = deg2rad($latitude2 - $latitude1);
+    $dLon = deg2rad($longitude2 - $longitude1);
+
+    $a = sin($dLat/2) * sin($dLat/2) + cos(deg2rad($latitude1)) * cos(deg2rad($latitude2)) * sin($dLon/2) * sin($dLon/2);
+    $c = 2 * asin(sqrt($a));
+    $d = $earth_radius * $c;
+
+    return $d;
+}
+
+
 #Let's add some search functionality
 #
 # first make sure that the query vars for the filters  are available to relevanssi
@@ -159,6 +174,7 @@ function relevanssi_qvs($qv) {
 	array_push($qv, 'provided_by');
 	array_push($qv, 'college_accredited');
 	array_push($qv, 'ceu');
+	array_push($qv, 'meta_key');
 	return $qv;
 
 }
@@ -188,29 +204,76 @@ function filter_courses($hits) {
 
 	// just make sure that we have some results to work with:
 	if ($hits[0] == null) {
-    // no search hits, so return all
-    $args = array( 'post_type' => 'course', 'posts_per_page' => -1);
+    	// no search hits, so return all
+    	$args = array( 'post_type' => 'course', 'posts_per_page' => -1);
 
-	if (isset($_GET['orderby']) && $_GET['orderby'] == "title"){
-		$args["orderby"] = "title";
-		$args['order'] = $_GET['order'];
+		if (isset($_GET['orderby']) && $_GET['orderby'] == "title"){
+			$args["orderby"] = "title";
+			$args['order'] = $_GET['order'];
+		}
+
+    	$hits[0] = get_posts($args);
+	}
+		// we have to sort the custom fields here.
+
+	if (isset($wp_query->query_vars['meta_key']) && $wp_query->query_vars['meta_key'] == 'start_date'){
+		$dateArray = array();
+		$returnArray = array();
+
+		foreach ($hits[0] as $hit) {
+			$dateArray[$hit->ID] = get_field('start_date',$hit->ID);
+		}
+
+		if ($_GET['order'] == "ASC") {
+			arsort($dateArray);
+		} else {
+			asort($dateArray);
+		}
+
+		foreach($dateArray as $ID => $date) {
+			foreach($hits[0] as $hit) {
+				if ($hit->ID == $ID){
+					$returnArray[] = $hit;
+				}
+			}
+		}
+
+		$hits[0] = $returnArray;
 	}
 
-	if (isset($_GET['orderby']) && $_GET['orderby'] == "meta_value"){
-		$args["orderby"] = "meta_value";
-		$args["meta_key"] = $_GET['meta_key'];
-		$args['order'] = $_GET['order'];
+	 if (isset($wp_query->query_vars['meta_key']) && $wp_query->query_vars['meta_key'] == 'map_location'){
+	//this one requires that we get the location information of the user, calculate the distance, and then sort by distance
+		$_SERVER['REMOTE_ADDR'] = "12.215.42.19";
+		$user_location = json_decode(shell_exec('curl "http://api.hostip.info/get_json.php?position=true&ip='.strval($_SERVER['REMOTE_ADDR']).'"'));
+		$user_lng = $user_location->lng;
+		$user_lat = $user_location->lat;
+		//now that we have the user location, let's calculate distance
+		$mapArray = array();
+		$returnArray = array();
+
+		foreach ($hits[0] as $hit) {
+			//get the latitude and longitude for each hit
+			$location = get_field('map_location',$hit->ID);
+			$address = get_field('map_location',$location[0]->ID);
+			$distance = getDistance($user_lat,$user_lng,$address['lat'],$address['lng']);
+			$mapArray[$hit->ID] = $distance;
+		}
+
+		if ($_GET['order'] == "ASC") {
+			arsort($mapArray);
+		} else {
+			asort($mapArray);
+		}
+
+		foreach($mapArray as $ID => $distance) {
+			foreach($hits[0] as $hit) {
+				if ($hit->ID == $ID){
+					$returnArray[] = $hit;
+				}
+			}
+		}
+		$hits[0] = $returnArray;
 	}
-
-	if (isset($_GET['orderby']) && $_GET['orderby'] == "meta_value_num"){
-		$args["orderby"] = "meta_value_num";
-		$args["meta_key"] = $_GET['meta_key'];
-		$args['order'] = $_GET['order'];
-	}
-
-
-    $hits[0] = get_posts($args);
-    }
    // now filter the results
    	$results = array();
 		foreach ($hits[0] as $hit) {
@@ -219,11 +282,11 @@ function filter_courses($hits) {
 			if (isset($wp_query->query_vars['start_date']) && get_field('start_date',$hit->ID) != null) {
                 $start_date = implode(" ",$wp_query->query_vars['start_date']);
 
-				if (date(Ymd,strtotime($start_date)) > date(Ymd,strtotime(strval(get_field('start_date',$hit->ID))))) {
+				if (date(Ymd,strtotime($start_date)) > date(Ymd,strtotime(strval(get_field('end_date',$hit->ID))))) {
 					continue;
                 }
 			} elseif (isset($wp_query->query_vars['start_date']) != true && get_field('start_date',$hit->ID) != null){
-				if (date(Ymd,strtoTime('now')) > date(Ymd,strtotime(strval(get_field('start_date',$hit->ID))))) {
+				if (date(Ymd,strtoTime('now')) > date(Ymd,strtotime(strval(get_field('end_date',$hit->ID))))) {
 					continue;
 				}
 			}
@@ -284,18 +347,17 @@ function filter_courses($hits) {
 				$suspect = false;
 			}
 
-
-
-            // since hit fell through everything, we can assume it's a good variable
-            if ($suspect == false){
-            $results[]= $hit;
+			// since hit fell through everything, we can assume it's a good variable
+			if ($suspect == false){
+            	$results[]= $hit;
             }
-					} else{
-						//doesn't have a specified delivery method, go ahead and return it.
-						$results[]= $hit;
-					}
+
+		} else{
+		//doesn't have a specified delivery method, go ahead and return it.
+		$results[]= $hit;
 		}
-        $hits[0] = $results;
+	}
+	$hits[0] = $results;
 	return $hits;
 }
 
