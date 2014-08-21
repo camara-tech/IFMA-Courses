@@ -12,52 +12,52 @@
 @import url("./css/bootstrap.min.css");
 @import url("./css/bootstrap-theme.min.css");
 
-/*template-part-search styling */
-/* Course title for the list of courses */
+//template-part-search styling
+// Course title for the list of courses
 .course-list {
-	border: #bbb solid thin;
-	box-shadow: 2px 3px 8px #ddd;
-	padding: 10px 20px;
-	margin-bottom: 20px;
-	width: 100%;
-	margin-right: auto;
-	margin-right: auto;
-	float: none;
+  border: #bbb solid thin;
+  box-shadow: 2px 3px 8px #ddd;
+  float: none;
+  margin-bottom: 20px;
+  margin-right: auto;
+  padding: 10px 20px;
+  width: 100%;
 }
 
 .course-title {
-	margin: 0.5em 0 0.4em;
-	padding-bottom: 9px;
-	border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  margin: .5em 0 .4em;
+  padding-bottom: 9px;
+
 }
 
 .course-details p {
-	display: inline-block;
-	padding-right: 10px;
+  display: inline-block;
+  padding-right: 10px;
 }
 
 .course-content {
-	margin-bottom: 1.5em;
+  margin-bottom: 1.5em;
 }
 
-/* rules for the single-course page */
+//rules for the single-course page
 .course-info {
-	padding: 1em;
-	border-radius: 0.5em;
-	border: 1px #ddd solid;
+  border: 1px #ddd solid;
+  border-radius: .5em;
+  padding: 1em;
 }
 
 .sidebar {
-	float:right;
-	margin-bottom:1em;
+  float: right;
+  margin-bottom: 1em;
 }
 
 .course-credential {
-	margin-top: 1em;
-}
+  margin-top: 1em;
 
-.course-credential img {
-	display: block;
-	margin-right: auto;
-	margin-left: auto;
+  img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+	}
 }
