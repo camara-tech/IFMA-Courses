@@ -81,13 +81,22 @@
 
                             <div class="col-lg-8 course-info">
 
+                            <?php    if (get_field("provided_by") { ?>
                                 <p>Provided By: <?php echo get_field("provided_by"); ?></p>
+                                <?php } ?>
+
                                 <?php $instructor = get_field('instructor');
                                     if ($instructor) {
                                         $name = get_field('first_name',$instructor[0])." ".get_field('last_name',$instructor[0]);?>
                                     <p>Instructor: <?php echo $name; ?></p>
                                     <?php } ?>
-                                <p>Course Level: <?php echo get_field("level"); ?></p>
+
+                                <?php if (get_field('level')) { ?>
+
+                                    <p>Course Level: <?php echo get_field("level"); ?></p>
+
+                                <?php }?>
+
                                 <?php if (get_field('college_credits')) { ?>
                                     <p>College Credit Hours: <?php echo get_field('college_credits') ?></p>
                                 <?php } ?>
