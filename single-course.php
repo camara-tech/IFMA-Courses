@@ -81,7 +81,7 @@
 
                             <div class="col-lg-8 course-info">
 
-                            <?php    if (get_field("provided_by") { ?>
+                            <?php    if (get_field("provided_by")) { ?>
                                 <p>Provided By: <?php echo get_field("provided_by"); ?></p>
                                 <?php } ?>
 
