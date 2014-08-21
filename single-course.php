@@ -50,7 +50,7 @@
                     <div class="course-details">
                         <?php if (get_field('start_date')){ ?>
                             <?php if (get_field('end_date') > get_field('start_date')){ ?>
-                            <p><i class="fa fa-calendar"></i> <?php echo date('M d, y',strtotime(get_field('start_date')))." - ".date('M d, y',strtotime(get_field('start_date'))); ?></p>
+                            <p><i class="fa fa-calendar"></i> <?php echo date('M d, y',strtotime(get_field('start_date')))." - ".date('M d, y',strtotime(get_field('end_date'))); ?></p>
                             <?php } else { ?>
                                 <p><i class="fa fa-calendar"></i> <?php echo date('M d, Y',strtotime(get_field('start_date'))); ?></p>
                             <?php } ?>
