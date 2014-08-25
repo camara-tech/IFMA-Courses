@@ -25,15 +25,25 @@
 }
 
 .course-title {
-  border-bottom: 1px solid #eee;
-  margin: .5em 0 .4em;
-  padding-bottom: 9px;
-
+  margin-bottom: .3em;
 }
 
-.course-details p {
-  display: inline-block;
-  padding-right: 10px;
+.course-provider {
+
+  font-size: 30px*.9;
+  margin-bottom: 0;
+  margin-top: .1em;
+  padding-bottom: .3em;
+}
+
+.course-details {
+  border-top: 1px solid #eee;
+
+  p {
+    display: inline-block;
+    margin-top: .9em;
+    padding-right: 10px;
+  }
 }
 
 .course-content {

@@ -11,10 +11,12 @@
                     <?php if ($_SERVER['HTTP_REFERER']) { ?>
                         <p class='search-return'><a href='javascript:history.go(-1)'><< Return to Search Results</a></p>
                     <?php } ?>
-                    <h2 class="page-header course-title"><?php the_title() ;?></h2>
+                    <div class="page-header">
+                    <h2 class="course-title"><?php the_title() ;?></h2>
                     <?php if (get_field('provided_by')) { ?>
-                    <h2 class="page-header course-provider"><?php echo get_field("provided_by"); ?></h2>
+                    <h2 class="course-provider"><?php echo get_field("provided_by"); ?></h2>
                     <?php } ?>
+                    </div>
                     <div class="sidebar col-lg-4">
                         <div class="course-credential center-block">
                             <?php
