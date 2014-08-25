@@ -21,13 +21,9 @@
 //this theme requires Advanced custom fields...until I can get a plugin working.
 
 //first we need to pull all ACF groups
-$acf = get_posts(array('post_type' => 'acf'));
+$acf = get_posts(array('post_type' => 'acf', 'name' => 'acf_courses'));
 // then we need to grab acf_courses
-foreach ($acf as $group) {
-    if ($group->post_name == 'acf_courses') {
-    $acf_group_ID = $group->ID;
-    }
-}
+$acf_group_ID = $acf[0]->ID;
 
 // all the information is stored in the meta fields
 $acf_group_meta = get_post_meta($acf_group_ID);
