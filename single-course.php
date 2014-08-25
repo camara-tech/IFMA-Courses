@@ -12,6 +12,9 @@
                         <p class='search-return'><a href='javascript:history.go(-1)'><< Return to Search Results</a></p>
                     <?php } ?>
                     <h2 class="page-header course-title"><?php the_title() ;?></h2>
+                    <?php if (get_field('provided_by')) { ?>
+                    <h2 class="page-header course-provider"><?php echo get_field("provided_by"); ?></h2>
+                    <?php } ?>
                     <div class="sidebar col-lg-4">
                         <div class="course-credential center-block">
                             <?php
@@ -81,9 +84,6 @@
 
                             <div class="col-lg-8 course-info">
 
-                            <?php    if (get_field("provided_by")) { ?>
-                                <p>Provided By: <?php echo get_field("provided_by"); ?></p>
-                                <?php } ?>
 
                                 <?php $instructor = get_field('instructor');
                                     if ($instructor) {
