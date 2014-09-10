@@ -1,1 +1,58 @@
 @import 'button';
+
+.page-header {
+  border: 0;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.about-fm {
+  margin: auto;
+  padding: 1em;
+  padding-bottom: 0;
+  width: 87%;
+}
+
+.about-fm-definition p {
+  font-size: 1.2em;
+}
+
+.about-fm-definition,
+.about-fm-competencies {
+  display: inline-block;
+  vertical-align: top;
+  width: 100%;
+
+  h2 {
+    margin-top: 0;
+    padding: 0;
+  }
+
+  p {
+    padding: 0;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  ul {
+    display: inline-block;
+    margin-bottom: 0;
+    margin-top: 0;
+    padding-left: 3%;
+    padding-top: 0;
+    text-align: left;
+    vertical-align: top;
+
+    @media (max-width:1200px){
+      width: 33%;
+    }
+
+    @media (max-width:995px){
+      width: 30%;
+    }
+
+    @media (max-width:690px){
+      width: 100%;
+    }
+  }
+}
