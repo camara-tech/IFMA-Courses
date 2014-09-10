@@ -11,7 +11,12 @@
                     <?php if ($_SERVER['HTTP_REFERER']) { ?>
                         <p class='search-return'><a href='javascript:history.go(-1)'><< Return to Search Results</a></p>
                     <?php } ?>
-                    <h2 class="page-header course-title"><?php the_title() ;?></h2>
+                    <div class="page-header">
+                    <h2 class="course-title"><?php the_title() ;?></h2>
+                    <?php if (get_field('provided_by')) { ?>
+                    <h2 class="course-provider"><?php echo get_field("provided_by"); ?></h2>
+                    <?php } ?>
+                    </div>
                     <div class="sidebar col-lg-4">
                         <div class="course-credential center-block">
                             <?php
@@ -50,7 +55,7 @@
                     <div class="course-details">
                         <?php if (get_field('start_date')){ ?>
                             <?php if (get_field('end_date') > get_field('start_date')){ ?>
-                            <p><i class="fa fa-calendar"></i> <?php echo date('M d, y',strtotime(get_field('start_date')))." - ".date('M d, y',strtotime(get_field('start_date'))); ?></p>
+                            <p><i class="fa fa-calendar"></i> <?php echo date('M d, y',strtotime(get_field('start_date')))." - ".date('M d, y',strtotime(get_field('end_date'))); ?></p>
                             <?php } else { ?>
                                 <p><i class="fa fa-calendar"></i> <?php echo date('M d, Y',strtotime(get_field('start_date'))); ?></p>
                             <?php } ?>
@@ -81,13 +86,19 @@
 
                             <div class="col-lg-8 course-info">
 
-                                <p>Provided By: <?php echo get_field("provided_by"); ?></p>
+
                                 <?php $instructor = get_field('instructor');
                                     if ($instructor) {
                                         $name = get_field('first_name',$instructor[0])." ".get_field('last_name',$instructor[0]);?>
                                     <p>Instructor: <?php echo $name; ?></p>
                                     <?php } ?>
-                                <p>Course Level: <?php echo get_field("level"); ?></p>
+
+                                <?php if (get_field('level')) { ?>
+
+                                    <p>Course Level: <?php echo get_field("level"); ?></p>
+
+                                <?php }?>
+
                                 <?php if (get_field('college_credits')) { ?>
                                     <p>College Credit Hours: <?php echo get_field('college_credits') ?></p>
                                 <?php } ?>
